@@ -137,7 +137,7 @@ const data = [
     descrizione: "Olio EP a base minerale per ingranaggi industriali",
     specifiche: "ISO 12925-1 CKD - DIN 51517-3 CLP - AGMA 9005 F-16 - I.V. minimo: 97",
     riferimenti: ["Mobil Mobilgear 600XP", "Pakelo Erolube EP C F", "Eni Blasia", "Shell Omala S2 GX", "Castrol Alpha SP", "Total Carter EP", "Fuchs Renolin CLP", "Petronas Gear MEP"],
-    icon: "Grasso.svg",
+    icon: "grasso.svg",
 	translations: {
       en: {
         tipologia: "PIVOTS-JOINTS-BEARINGS-SUPPORTS",
@@ -362,3 +362,4 @@ document.addEventListener('DOMContentLoaded', () => {
   ensureBackContainerExists();
   showHome();
 });
+
