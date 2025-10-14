@@ -248,6 +248,8 @@ function goHome() {
 }
 
 function showHome() {
+  window.scroll(0, 0);
+  
   currentItem = null;
   app.innerHTML = '';
 
@@ -273,6 +275,8 @@ function showHome() {
 
 // ======= DETTAGLI =======
 function showDetails(item) {
+  window.scroll(0, 0);  
+  
   currentItem = item;
   app.innerHTML = '';
 
