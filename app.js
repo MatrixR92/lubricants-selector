@@ -209,44 +209,8 @@ const translations = {
 
 let currentLang = 'it';
 let currentItem = null;
-let globalBackContainer = null;
 
 const app = document.getElementById('app');
-
-// ======= BACK BUTTON =======
-function ensureBackContainerExists() {
-  if (globalBackContainer) return globalBackContainer;
-
-  const container = document.createElement('div');
-  container.className = 'back-btn-container';
-  container.style.display = 'none';
-
-  const backBtn = document.createElement('a');
-  backBtn.href = '#';
-  backBtn.className = 'back-btn';
-  backBtn.textContent = translations[currentLang].back;
-  backBtn.onclick = (e) => {
-    e.preventDefault();
-    hideBackContainer();
-    showHome();
-  };
-
-  container.appendChild(backBtn);
-  document.body.appendChild(container);
-  globalBackContainer = container;
-  return container;
-}
-
-function showBackContainer() {
-  const c = ensureBackContainerExists();
-  c.querySelector('.back-btn').textContent = translations[currentLang].back;
-  c.style.display = 'flex';
-}
-
-function hideBackContainer() {
-  const c = ensureBackContainerExists();
-  c.style.display = 'none';
-}
 
 // ======= LINGUE =======
 function toggleLangMenu() {
@@ -278,13 +242,13 @@ window.addEventListener('click', (e) => {
   }
 });
 
-// ======= HOME =======
+// ======= HEADER / HOME =======
+function goHome() {
+  showHome();
+}
+
 function showHome() {
-  // Scroll in alto
-  window.scroll({ top: 0, behavior: 'smooth' });
-  
   currentItem = null;
-  hideBackContainer();
   app.innerHTML = '';
 
   const grid = document.createElement('div');
@@ -307,11 +271,8 @@ function showHome() {
   app.appendChild(grid);
 }
 
-// ======= DETTAGLIO =======
+// ======= DETTAGLI =======
 function showDetails(item) {
-  // Scroll in alto
-  window.scroll({ top: 0, behavior: 'smooth' });	
-
   currentItem = item;
   app.innerHTML = '';
 
@@ -347,8 +308,17 @@ function showDetails(item) {
   `;
   details.appendChild(table);
 
+  const backBtn = document.createElement('a');
+  backBtn.href = '#';
+  backBtn.className = 'back-btn';
+  backBtn.textContent = translations[currentLang].back;
+  backBtn.onclick = (e) => {
+    e.preventDefault();
+    showHome();
+  };
+  details.appendChild(backBtn);
+
   app.appendChild(details);
-  showBackContainer();
 }
 
 // ======= AVVIO =======
@@ -359,7 +329,5 @@ document.addEventListener('DOMContentLoaded', () => {
   const current = document.getElementById('currentLang');
   if (current) current.src = `img/${currentLang}.png`;
 
-  ensureBackContainerExists();
   showHome();
 });
-
