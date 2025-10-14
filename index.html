@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lubricant Selector</title>
+
+  <!-- Foglio di stile -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Icona -->
+  <link rel="icon" type="image/png" href="logo.png" />
+</head>
+<body>
+  <!-- HEADER FISSO -->
+  <header>
+    <img src="img/logo.svg" alt="Logo" class="logo">
+    <h1>LUBRICANT SELECTOR</h1>
+    <div class="lang-icon" title="Cambia lingua" onclick="toggleLangMenu()">
+      <img src="img/it.png" alt="Lingua" id="currentLang">
+    </div>
+    <div class="lang-menu" id="langMenu">
+      <div onclick="setLang('it')"><img src="img/it.png" alt="Italiano"> Italiano</div>
+      <div onclick="setLang('en')"><img src="img/en.png" alt="English"> English</div>
+      <div onclick="setLang('fr')"><img src="img/fr.png" alt="Français"> Français</div>
+	  <div onclick="setLang('de')"><img src="img/de.png" alt="Deutsch"> Deutsch</div>
+	  <div onclick="setLang('es')"><img src="img/es.png" alt="Español"> Español</div>
+    </div>  
+    <div class="home-icon" title="Home" onclick="goHome()" style="display:none">
+      <img src="img/home.svg" alt="Home">
+    </div>
+  </header>
+
+  <!-- CONTENITORE SCORREVOLE -->
+  <main id="app-container">
+    <div id="app">
+      <!-- Contenuto dinamico gestito da app.js -->
+    </div>
+	<p class="copyright">© 2025 Alpego S.p.A. — Tutti i diritti riservati</p>
+  </main>
+
+  <!-- PULSANTE FISSO IN BASSO -->
+  <div id="fixed-footer">
+    <button id="backButton" class="back-btn" style="display:none;">Torna alla lista</button>
+  </div>
+
+  <!-- Script principale -->
+  <script src="app.js"></script>
+</body>
+</html>
