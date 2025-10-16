@@ -295,3 +295,39 @@ h2 {
   font-weight: 600;
   margin: 0.3rem 0.2rem 0.6rem 0.2rem;
 }
+/* Riferimenti commerciali - tabella moderna */
+.refs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.ref-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background-color: #1f1f1f;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  justify-content: center;
+  transition: background 0.2s ease-in-out;
+}
+
+.ref-item:hover {
+  background-color: #2a2a2a;
+}
+
+.ref-item img {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+}
+
+.ref-item span {
+  color: #fff;
+  font-size: 0.95rem;
+  text-align: center;
+}

@@ -7,7 +7,16 @@ const data = [
     viscosita: "ISO VG 320",
     descrizione: "Olio EP a base minerale per ingranaggi industriali",
     specifiche: "ISO 12925-1 CKD - DIN 51517-3 CLP - AGMA 9005 F-16 - I.V. minimo: 97",
-    riferimenti: ["Mobil Mobilgear 600XP", "Pakelo Erolube EP C F", "Eni Blasia", "Shell Omala S2 GX", "Castrol Alpha SP", "Total Carter EP", "Fuchs Renolin CLP", "Petronas Gear MEP"],
+    riferimenti: [
+		{ brand: "Mobil", nome: "Mobilgear 600XP" },
+		{ brand: "Pakelo", nome: "Erolube EP C F" },
+		{ brand: "Eni", nome: "Blasia" },
+		{ brand: "Shell", nome: "Omala S2 GX" },
+		{ brand: "Castrol", nome: "Alpha SP" },
+		{ brand: "Total", nome: "Carter EP" },
+		{ brand: "Fuchs", nome: "Renolin CLP" },
+		{ brand: "Petronas", nome: "Gear MEP" }
+	],
     icon: "riduttori-standard.svg",
     translations: {
       en: {
@@ -39,7 +48,15 @@ const data = [
     viscosita: "ISO VG 220",
     descrizione: "Olio EP a base sintetica (PAO) per ingranaggi industriali",
     specifiche: "ISO 12925-1 CKD - DIN 51517-3 CLP - AGMA 9005 F-16 - I.V. minimo: 169",
-    riferimenti: ["Mobil SHC 630", "Shell Omala S4 GXV 220", "Castrol Optigear PD 220 ES", "Fuchs Renolin Unisyn XT 220", "Total Carter SH 220", "Eni Blasia SX 220", "Petronas Gear Syn PAO 220"],
+    riferimenti: [
+		{ brand: "Mobil", nome: "SHC 630" },
+		{ brand: "Shell", nome: "Omala S4 GXV 220" },
+		{ brand: "Castrol", nome: "Optigear PD 220 ES" },
+		{ brand: "Fuchs", nome: "Renolin Unisyn XT 220" },
+		{ brand: "Total", nome: "Carter SH 220" },
+		{ brand: "Eni", nome: "Blasia SX 220" },
+		{ brand: "Petronas", nome: "Gear Syn PAO 220" }
+	],
     icon: "riduttori-hp.svg",
 	translations: {
       en: {
@@ -71,7 +88,11 @@ const data = [
     viscosita: "NLGI 000",
     descrizione: "Grasso EP semifluido (idrossistearato di litio) per ingranaggi in vasca",
     specifiche: "DIN 51826 - GP000G-20",
-    riferimenti: ["Mobil Mobilux EP 023", "Total Multis EP 000", "Fuchs Renolit SF 7-041"],
+    riferimenti: [
+		{ brand: "Mobil", nome: "Mobilux EP 023" },
+		{ brand: "Total", nome: "Multis EP 000" },
+		{ brand: "Fuchs", nome: "Renolit SF 7-041" },
+	],
     icon: "vasche.svg",
     translations: {
       en: {
@@ -103,7 +124,13 @@ const data = [
     viscosita: "ISO VG 320",
     descrizione: "(OLIO NON CONDIVISO CON TRATTORE) Olio EP a base minerale per ingranaggi industriali",
     specifiche: "ISO 12925-1 CKD - DIN 51517-3 CLP - AGMA 9005 F-16 - I.V. minimo: 97",
-    riferimenti: ["Mobil Mobilgear 600XP", "Pakelo Erolube EP C F", "Eni Blasia", "Shell Omala S2 GX", "Castrol Alpha SP", "Total Carter EP", "Fuchs Renolin CLP", "Petronas Gear MEP"],
+    riferimenti: [
+		{ brand: "Mobil", nome: "DTE 10 Excel 46" },
+		{ brand: "Shell", nome: "Tellus S3 V 46" },
+		{ brand: "Eni", nome: "Arnica 46" },
+		{ brand: "Total", nome: "Equivis AF 46" },
+		{ brand: "Pakelo", nome: "Hydraulic Fluid HVI 46" },
+	],
     icon: "circuiti.svg",
 	translations: {
       en: {
@@ -136,7 +163,11 @@ const data = [
     descrizioni: "Olio EP a base minerale per ingranaggi industriali",
     descrizione: "Olio EP a base minerale per ingranaggi industriali",
     specifiche: "ISO 12925-1 CKD - DIN 51517-3 CLP - AGMA 9005 F-16 - I.V. minimo: 97",
-    riferimenti: ["Mobil Mobilgear 600XP", "Pakelo Erolube EP C F", "Eni Blasia", "Shell Omala S2 GX", "Castrol Alpha SP", "Total Carter EP", "Fuchs Renolin CLP", "Petronas Gear MEP"],
+    riferimenti: [
+		{ brand: "Mobil", nome: "Mobilgrease XHP 222" },
+		{ brand: "Total", nome: "Multis Complex S2A" },
+		{ brand: "Pakelo", nome: "Contact Grease EP 2" },
+	],
     icon: "grasso.svg",
 	translations: {
       en: {
@@ -162,6 +193,19 @@ const data = [
     },
   },
 ];
+
+function getBrandLogo(ref) {
+  const name = ref.toLowerCase();
+  if (name.includes('mobil')) return 'mobil.png';
+  if (name.includes('pakelo')) return 'pakelo.png';
+  if (name.includes('eni')) return 'eni.png';
+  if (name.includes('shell')) return 'shell.png';
+  if (name.includes('castrol')) return 'castrol.png';
+  if (name.includes('total')) return 'total.png';
+  if (name.includes('fuchs')) return 'fuchs.png';
+  if (name.includes('petronas')) return 'petronas.png';
+  return 'default.png';
+}
 
 // ======= TRADUZIONI STATICHE =======
 const translations = {
@@ -308,7 +352,20 @@ function showDetails(item) {
     <tr><th>${translations[currentLang].intensity}</th><td>${item.intensita}</td></tr>
     <tr><th>${translations[currentLang].viscosity}</th><td>${item.viscosita}</td></tr>
     <tr><th>${translations[currentLang].specs}</th><td>${item.specifiche}</td></tr>
-    <tr><th>${translations[currentLang].refs}</th><td>${item.riferimenti.map(r => `<span class="badge">${r}</span>`).join(' ')}</td></tr>
+    <tr>
+<tr>
+  <th>${translations[currentLang].refs}</th>
+  <td>
+    <div class="refs-list">
+      ${item.riferimenti.map(ref => `
+        <div class="ref-item">
+          <img src="img/loghi/${ref.brand.toLowerCase()}.png" alt="${ref.brand}">
+          <span>${ref.nome}</span>
+        </div>
+      `).join('')}
+    </div>
+  </td>
+</tr>
   `;
   details.appendChild(table);
 
