@@ -1,12 +1,12 @@
 // ======= DATI =======
 const data = [
   {
-    tipologia: "RIDUTTORI-MOLTIPLICATORI-CAMBI",
-    modello: "BA - BE - BV - BG - BE - BF - DJ - FB - FV - FG - LG - KG - IG - TB - TR - TL - TT",
+    tipologia: "RIDUTTORI<br>MOLTIPLICATORI<br>CAMBI",
+    modello: "BA - BE - BV - BG - BE - BF<br>DJ - FB - FV - FG - LG - KG - IG<br>TB - TR - TL - TT",
     intensita: "Standard",
     viscosita: "ISO VG 320",
     descrizione: "Olio EP a base minerale per ingranaggi industriali",
-    specifiche: "ISO 12925-1 CKD - DIN 51517-3 CLP - AGMA 9005 F-16 - I.V. minimo: 97",
+    specifiche: "ISO 12925-1 CKD<br>DIN 51517-3 CLP<br>AGMA 9005 F-16<br>I.V. min.: 97",
     riferimenti: [
 		{ brand: "Mobil", nome: "Mobilgear 600XP" },
 		{ brand: "Pakelo", nome: "Erolube EP C F" },
@@ -20,34 +20,31 @@ const data = [
     icon: "riduttori-standard.svg",
     translations: {
       en: {
-        tipologia: "GEARBOXES-MULTIPLIERS",
+        tipologia: "GEARBOXES<br>MULTIPLIERS",
         descrizione: "Mineral EP oil for industrial gears",
-		intensita: "",
       },
       fr: {
-        tipologia: "RÉDUCTEURS ET MULTIPLICATEURS DE VITESSE",
+        tipologia: "RÉDUCTEURS<br>MULTIPLICATEURS",
         descrizione: "Huile EP à base minérale pour engrenages industriels",
-		intensita: "",
       },
 	  de: {
-        tipologia: "",
-        descrizione: "",
-		intensita: "",
+        tipologia: "GETRIEBE<br>VERVIELFÄLTIGER",
+        descrizione: "Mineralisches EP-Öl für Industriegetriebe",
       },
 	  es: {
-        tipologia: "",
-        descrizione: "",
-		intensita: "",
+        tipologia: "REDUCTORES<br>MULTIPLICADORES",
+        descrizione: "Aceite mineral EP para engranajes industriales",
+		intensita: "Estándar",
       },
     },
   },
   {
-    tipologia: "RIDUTTORI-MOLTIPLICATORI-CAMBI",
-    modello: "RM - RMT - RK - RTEK - RMAX DP - DK - DTEK - DMAX - FZ - LZ - KZ - POKER - TYSON",
+    tipologia: "RIDUTTORI<br>MOLTIPLICATORI<br>CAMBI",
+    modello: "RM - RMT - RK - RTEK - RMAX - DP - DK - DTEK - DMAX<br>FZ - LZ - KZ - POKER - TYSON",
     intensita: "Elevata",
     viscosita: "ISO VG 220",
     descrizione: "Olio EP a base sintetica (PAO) per ingranaggi industriali",
-    specifiche: "ISO 12925-1 CKD - DIN 51517-3 CLP - AGMA 9005 F-16 - I.V. minimo: 169",
+    specifiche: "ISO 12925-1 CKD<br>DIN 51517-3 CLP<br>AGMA 9005 F-16<br>I.V. min.: 169",
     riferimenti: [
 		{ brand: "Mobil", nome: "SHC 630" },
 		{ brand: "Shell", nome: "Omala S4 GXV 220" },
@@ -60,34 +57,34 @@ const data = [
     icon: "riduttori-hp.svg",
 	translations: {
       en: {
-        tipologia: "GEARBOXES-MULTIPLIERS",
+        tipologia: "GEARBOXES<br>MULTIPLIERS",
         descrizione: "Synthetic EP oil (PAO) for industrial gears",
-		intensita: "",
+		intensita: "High",
       },
       fr: {
-        tipologia: "RÉDUCTEURS ET MULTIPLICATEURS DE VITESSE",
-        descrizione: "Huile EP à base minérale pour engrenages industriels",
-		intensita: "",
+        tipologia: "RÉDUCTEURS<br>MULTIPLICATEURS",
+        descrizione: "Huile synthétique EP (PAO) pour engrenages industriels",
+		intensita: "Élevé",
       },
 	  de: {
-        tipologia: "",
-        descrizione: "",
-		intensita: "",
+        tipologia: "GETRIEBE<br>VERVIELFÄLTIGER",
+        descrizione: "Synthetisches EP-Öl (PAO) für Industriegetriebe",
+		intensita: "Hoch",
       },
 	  es: {
-        tipologia: "",
-        descrizione: "",
-		intensita: "",
+        tipologia: "REDUCTORES<br>MULTIPLICADORES",
+        descrizione: "Aceite sintético EP (PAO) para engranajes industriales",
+		intensita: "Alto",
       },
     },
   },
   {
     tipologia: "VASCHE",
-    modello: "Tutte",
-    intensita: "Standard - Elevata",
+    modello: "Tutte le Macchine",
+    intensita: "Standard<br>Elevata",
     viscosita: "NLGI 000",
     descrizione: "Grasso EP semifluido (idrossistearato di litio) per ingranaggi in vasca",
-    specifiche: "DIN 51826 - GP000G-20",
+    specifiche: "DIN 51826<br>GP000G-20",
     riferimenti: [
 		{ brand: "Mobil", nome: "Mobilux EP 023" },
 		{ brand: "Total", nome: "Multis EP 000" },
@@ -98,32 +95,36 @@ const data = [
       en: {
         tipologia: "TROUGHS",
         descrizione: "Semi-fluid EP grease (lithium) for crankcase gears",
-		intensita: "",
+		intensita: "Standard<br>High",
+		modello: "All Machines",
       },
       fr: {
-        tipologia: "BAINS D’ENGRENAGES",
-        descrizione: "Graisse EP semi-fluide (hydroxystéarate de lithium) pour engrenages en cuve",
-		intensita: "",
+        tipologia: "VASQUES",
+        descrizione: "Graisse EP semi-fluide (lithium) pour engrenages de carter",
+		intensita: "Standard<br>Élevé",
+		modello: "Toutes les Machines",
       },
 	  de: {
-        tipologia: "",
-        descrizione: "",
-		intensita: "",
+        tipologia: "WANNEN",
+        descrizione: "Halbflüssiges EP-Fett (Lithium) für Kurbelgehäusegetriebe",
+		intensita: "Standard<br>Hoch",
+		modello: "Alle Maschinen",
       },
 	  es: {
-        tipologia: "",
-        descrizione: "",
-		intensita: "",
+        tipologia: "VASCHE",
+        descrizione: "Grasa EP semifluida (litio) para engranajes del cárter",
+		intensita: "Estándar<br>Alto",
+		modello: "Todas las Máquinas",
       },
     },
   },
   {
     tipologia: "CIRCUITI IDRAULICI",
-    modello: "BA - BE - BV - BG - BE - BF - DJ - FB - FV - FG - LG - KG - IG - TB - TR - TL - TT",
-    intensita: "Standard",
-    viscosita: "ISO VG 320",
-    descrizione: "(OLIO NON CONDIVISO CON TRATTORE) Olio EP a base minerale per ingranaggi industriali",
-    specifiche: "ISO 12925-1 CKD - DIN 51517-3 CLP - AGMA 9005 F-16 - I.V. minimo: 97",
+    modello: "AGILE",
+    intensita: "Standard<br>Elevata",
+    viscosita: "ISO VG 46",
+    descrizione: "(OLIO NON CONDIVISO CON TRATTORE)<br>Olio minerale idraulico antiusura ad alto indice di viscosità",
+    specifiche: "ISO L-HM L-HV (ISO 11158)<br>DENISON HF-0 HF-1 HF-2<br>ASTM D6158 (HVHP)<br>DIN 51524-3 HVLP",
     riferimenti: [
 		{ brand: "Mobil", nome: "DTE 10 Excel 46" },
 		{ brand: "Shell", nome: "Tellus S3 V 46" },
@@ -135,34 +136,33 @@ const data = [
 	translations: {
       en: {
         tipologia: "HYDRAULIC CIRCUITS",
-        descrizione: "(OIL SEPARATE FROM THE TRACTOR) Anti-wear hydraulic oil with high viscosity index",
-		intensita: "",
+        descrizione: "(OIL SEPARATE FROM THE TRACTOR)<br>Anti-wear hydraulic oil with high viscosity index",
+		intensita: "Standard<br>High",
       },
       fr: {
-        tipologia: "",
-        descrizione: "",
-		intensita: "",
+        tipologia: "CIRCUITS HYDRAULIQUES",
+        descrizione: "(HUILE SÉPARÉE DU TRACTEUR)<br>Huile hydraulique anti-usure à indice de viscosité élevé",
+		intensita: "Standard<br>Élevé",
       },
 	  de: {
-        tipologia: "",
-        descrizione: "",
-		intensita: "",
+        tipologia: "HYDRAULIKKREISLÄUFE",
+        descrizione: "(ÖL GETRENNT VOM TRAKTOR)<br>Verschleißfestes Hydrauliköl mit hohem Viskositätsindex",
+		intensita: "Standard<br>Hoch",
       },
 	  es: {
-        tipologia: "",
-        descrizione: "",
-		intensita: "",
+        tipologia: "CIRCUITOS HIDRÁULICOS",
+        descrizione: "(ACEITE SEPARADO DEL TRACTOR)<br>Aceite hidráulico antidesgaste con alto índice de viscosidad",
+		intensita: "Estándar<br>Alto",
       },
     },
   },
   {
-    tipologia: "PERNI-SNODI-CUSCINETTI-SUPPORTI",
-    modello: "BA - BE - BV - BG - BE - BF - DJ - FB - FV - FG - LG - KG - IG - TB - TR - TL - TT",
-    intensita: "Standard",
-    viscosita: "ISO VG 320",
-    descrizioni: "Olio EP a base minerale per ingranaggi industriali",
-    descrizione: "Olio EP a base minerale per ingranaggi industriali",
-    specifiche: "ISO 12925-1 CKD - DIN 51517-3 CLP - AGMA 9005 F-16 - I.V. minimo: 97",
+    tipologia: "PERNI<br>SNODI<br>CUSCINETTI<br>SUPPORTI",
+    modello: "Tutte le Macchine",
+    intensita: "Standard<br>Elevata",
+    viscosita: "NLGI 2",
+    descrizione: "Grasso EP al litio complesso, adesivo, blu",
+    specifiche: "DIN 51825 KP2N-20",
     riferimenti: [
 		{ brand: "Mobil", nome: "Mobilgrease XHP 222" },
 		{ brand: "Total", nome: "Multis Complex S2A" },
@@ -171,24 +171,28 @@ const data = [
     icon: "grasso.svg",
 	translations: {
       en: {
-        tipologia: "PIVOTS-JOINTS-BEARINGS-SUPPORTS",
+        tipologia: "PIVOTS<br>JOINTS<br>BEARINGS<br>SUPPORTS",
         descrizione: "Lithium complex EP grease, blue adhesive",
-		intensita: "",
+		intensita: "Standard<br>High",
+		modello: "All Machines",
       },
       fr: {
-        tipologia: "",
-        descrizione: "",
-		intensita: "",
+        tipologia: "PIVOTS<br>ARTICULATIONS<br>ROULEMENTS<br>SUPPORTS",
+        descrizione: "Graisse EP au complexe de lithium, adhésif bleu",
+		intensita: "Standard<br>Élevé",
+		modello: "Toutes les Machines",
       },
 	  de: {
-        tipologia: "",
-        descrizione: "",
-		intensita: "",
+        tipologia: "DREHPUNKTE<br>GELENKE<br>LAGER<br>STÜTZEN",
+        descrizione: "Lithiumkomplex-EP-Fett, blau klebend",
+		intensita: "Standard<br>Hoch",
+		modello: "Alle Maschinen",
       },
 	  es: {
-        tipologia: "",
-        descrizione: "",
-		intensita: "",
+        tipologia: "PERNI<br>ARTICULACIONES<br>COJINETES<br>SOPORTES",
+        descrizione: "Aceite hidráulico antidesgaste con alto índice de viscosidad",
+		intensita: "Estándar<br>Alto",
+		modello: "Todas las Máquinas",
       },
     },
   },
@@ -327,6 +331,9 @@ function showDetails(item) {
   const langData = item.translations?.[currentLang] || {};
   const titolo = langData.tipologia || item.tipologia;
   const descr = langData.descrizione || item.descrizione;
+  const modello = langData.modello || item.modello;
+  const intensita = langData.intensita || item.intensita;
+  const titolomod = titolo.replace(/<br\s*\/?>/gi, ' - ');
 
   const details = document.createElement('div');
   details.className = 'details';
@@ -338,7 +345,7 @@ function showDetails(item) {
   details.appendChild(logo);
 
   const h2 = document.createElement('h2');
-  h2.textContent = titolo;
+  h2.textContent = titolomod;
   details.appendChild(h2);
 
   const descrizione = document.createElement('p');
@@ -348,8 +355,8 @@ function showDetails(item) {
   const table = document.createElement('table');
   table.className = 'table-info';
   table.innerHTML = `
-    <tr><th>${translations[currentLang].model}</th><td>${item.modello}</td></tr>
-    <tr><th>${translations[currentLang].intensity}</th><td>${item.intensita}</td></tr>
+    <tr><th>${translations[currentLang].model}</th><td>${modello}</td></tr>
+    <tr><th>${translations[currentLang].intensity}</th><td>${intensita}</td></tr>
     <tr><th>${translations[currentLang].viscosity}</th><td>${item.viscosita}</td></tr>
     <tr><th>${translations[currentLang].specs}</th><td>${item.specifiche}</td></tr>
     <tr>
