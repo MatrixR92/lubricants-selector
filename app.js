@@ -432,7 +432,7 @@ async function generaPDF(item) {
   // Logo principale (se esiste)
   try {
     const img = await caricaImmagine(`img/${item.icon}`);
-    doc.addImage(img, "PNG", 160, 10, 25, 25);
+    doc.addImage(img, "PNG", 170, 10, 25, 25);
   } catch (err) {
     console.warn("Logo principale non trovato:", err);
   }
@@ -496,14 +496,14 @@ async function generaPDF(item) {
     tempImg.src = imgData;
     await new Promise(resolve => tempImg.onload = resolve);
 
-    const targetHeight = 12; // altezza desiderata
+    const targetHeight = 8; // altezza desiderata
     const targetWidth = (tempImg.width / tempImg.height) * targetHeight;
 
     doc.addImage(imgData, "PNG", left, y - 4, targetWidth, targetHeight);
   } catch(err) {
     console.warn("Logo riferimento non trovato:", err);
   }
-  doc.text(ref.nome, left + 18, y + 3);
+  doc.text(ref.nome, left + 25, y + 3);
   y += 14; // spazio verticale tra riferimenti
 }
 
