@@ -417,12 +417,12 @@ async function generaPDF(item) {
   const langData = item.translations?.[currentLang] || {};
   const titolo = (langData.tipologia || item.tipologia || "").replace(/<br\s*\/?>/gi, " - ");
   doc.text(titolo, left, y);
-  y += 10;
+  y += 15;
 
   // Logo principale (se esiste)
   try {
     const img = await caricaImmagine(`img/${item.icon}`);
-    doc.addImage(img, "PNG", 160, 6, 20, 20);
+    doc.addImage(img, "PNG", 160, 10, 30, 30);
   } catch (err) {
     console.warn("Logo principale non trovato:", err);
   }
@@ -458,7 +458,6 @@ async function generaPDF(item) {
   
   });
 
-  y += 4;
   doc.line(left, y, 195, y);
   y += 10;
 
@@ -480,7 +479,7 @@ async function generaPDF(item) {
 
   for (const ref of item.riferimenti) {
     try {
-      const img = await caricaImmagine(`img/loghi/${ref.brand.toLowerCase()}.svg`);
+      const img = await caricaImmagine(`img/loghi/${ref.brand.toLowerCase()}.png`);
       doc.addImage(img, "PNG", left, y - 4, 12, 12);
     } catch {}
     doc.text(ref.nome, left + 18, y + 3);
@@ -490,7 +489,21 @@ async function generaPDF(item) {
   // Footer
   doc.setFontSize(10);
   doc.setTextColor(150);
-  doc.text("© Alpego | Generato automaticamente", left, 285);
+  const footerText = "© Alpego | Generato automaticamente";
+  const footerX = 15;
+  const footerY = 285;
+  
+  // Testo
+  doc.text(footerText, footerX, footerY);
+  
+  // Logo piccolo
+  try {
+    const footerLogo = await caricaImmagine("img/logo-piccolo.png"); // percorso al tuo logo
+    doc.addImage(footerLogo, "PNG", footerX + doc.getTextWidth(footerText) + 5, footerY - 4, 12, 12); 
+    // left: subito dopo il testo, top: allineato al testo, larghezza/altezza 12
+  } catch (err) {
+    console.warn("Logo footer non trovato:", err);
+  }
 
   // Salva PDF
   doc.save(`${titolo.replace(/\s+/g, "_")}.pdf`);
