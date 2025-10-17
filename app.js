@@ -145,7 +145,7 @@ const data = [
 		intensita: "Standard<br>Élevé",
       },
 	  de: {
-        tipologia: "HYDRAULIKKREISLÄUFE",
+        tipologia: "HYDRAULIKKREI-<br>SLÄUFE",
         descrizione: "(ÖL GETRENNT VOM TRAKTOR)<br>Verschleißfestes Hydrauliköl mit hohem Viskositätsindex",
 		intensita: "Standard<br>Hoch",
       },
