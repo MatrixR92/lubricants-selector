@@ -389,13 +389,23 @@ function showDetails(item) {
   const pdfBtn = document.createElement('a');
   pdfBtn.href = '#';
   pdfBtn.className = 'back-btn';
-  pdfBtn.textContent = 'Esporta PDF';
+  pdfBtn.style.display = 'inline-flex';
+  pdfBtn.style.alignItems = 'center';
+  pdfBtn.style.gap = '5px'; // distanza tra icona e testo
   pdfBtn.style.marginLeft = '10px';
   pdfBtn.onclick = (e) => {
-	e.preventDefault();
-	generaPDF(item);
+	  e.preventDefault();
+	  generaPDF(item);
   };
-details.appendChild(pdfBtn);
+    
+  // Testo
+  const text = document.createTextNode('PDF');
+  
+  // Inserisci icona e testo nel pulsante
+  pdfBtn.appendChild(text);
+  
+  // Aggiungi il pulsante alla pagina
+  details.appendChild(pdfBtn);
 
   app.appendChild(details);
 }
@@ -422,7 +432,7 @@ async function generaPDF(item) {
   // Logo principale (se esiste)
   try {
     const img = await caricaImmagine(`img/${item.icon}`);
-    doc.addImage(img, "PNG", 160, 10, 30, 30);
+    doc.addImage(img, "PNG", 160, 10, 25, 25);
   } catch (err) {
     console.warn("Logo principale non trovato:", err);
   }
@@ -478,32 +488,58 @@ async function generaPDF(item) {
   doc.setFont("helvetica", "normal");
 
   for (const ref of item.riferimenti) {
-    try {
-      const img = await caricaImmagine(`img/loghi/${ref.brand.toLowerCase()}.png`);
-      doc.addImage(img, "PNG", left, y - 4, 12, 12);
-    } catch {}
-    doc.text(ref.nome, left + 18, y + 3);
-    y += 10;
+  try {
+    const imgData = await caricaImmagine(`img/loghi/${ref.brand.toLowerCase()}.png`);
+
+    // Crea un elemento Image temporaneo per leggere larghezza/altezza reali
+    const tempImg = new Image();
+    tempImg.src = imgData;
+    await new Promise(resolve => tempImg.onload = resolve);
+
+    const targetHeight = 12; // altezza desiderata
+    const targetWidth = (tempImg.width / tempImg.height) * targetHeight;
+
+    doc.addImage(imgData, "PNG", left, y - 4, targetWidth, targetHeight);
+  } catch(err) {
+    console.warn("Logo riferimento non trovato:", err);
   }
+  doc.text(ref.nome, left + 18, y + 3);
+  y += 14; // spazio verticale tra riferimenti
+}
 
   // Footer
-  doc.setFontSize(10);
-  doc.setTextColor(150);
-  const footerText = "© Alpego | Generato automaticamente";
-  const footerX = 15;
-  const footerY = 285;
-  
-  // Testo
-  doc.text(footerText, footerX, footerY);
-  
-  // Logo piccolo
-  try {
-    const footerLogo = await caricaImmagine("img/logo-piccolo.png"); // percorso al tuo logo
-    doc.addImage(footerLogo, "PNG", footerX + doc.getTextWidth(footerText) + 5, footerY - 4, 12, 12); 
-    // left: subito dopo il testo, top: allineato al testo, larghezza/altezza 12
-  } catch (err) {
-    console.warn("Logo footer non trovato:", err);
-  }
+doc.setFontSize(10);
+doc.setTextColor(150);
+
+const footerText = "© Alpego | Generato automaticamente";
+const pageWidth = doc.internal.pageSize.getWidth();
+const pageHeight = doc.internal.pageSize.getHeight();
+const margin = 15;
+
+// Testo a sinistra
+doc.text(footerText, margin, pageHeight - 10);
+
+// Logo a destra
+try {
+  const footerLogo = await caricaImmagine("img/logo-piccolo.png");
+  const tempImg = new Image();
+  tempImg.src = footerLogo;
+  await new Promise(resolve => tempImg.onload = resolve);
+
+  const targetHeight = 12;
+  const targetWidth = (tempImg.width / tempImg.height) * targetHeight;
+
+  doc.addImage(
+    footerLogo,
+    "PNG",
+    pageWidth - margin - targetWidth,
+    pageHeight - 10 - targetHeight / 2, // centra verticalmente rispetto al testo
+    targetWidth,
+    targetHeight
+  );
+} catch(err) {
+  console.warn("Logo footer non trovato:", err);
+}
 
   // Salva PDF
   doc.save(`${titolo.replace(/\s+/g, "_")}.pdf`);
