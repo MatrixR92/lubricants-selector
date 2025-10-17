@@ -284,7 +284,7 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 450px;
+  max-width: 400px;
   width: 100%;
   margin: 1rem auto 0 auto;
 }
@@ -296,12 +296,12 @@ h2 {
   gap: 8px;
   background: #efefef;
   border-radius: 10px;
-  padding: 10px 14px;
+  padding: 5px 10px;
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .ref-item img {
-  height: 45px;          /* leggermente più grande per desktop */
+  height: 42px;          /* leggermente più grande per desktop */
   width: auto;
   /*max-width: 90px;*/       /* limite per immagini orizzontali */
   object-fit: contain;   /* mantiene proporzioni corrette */
