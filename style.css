@@ -229,7 +229,7 @@ h2 {
   justify-content: center; /* pulsante centrato */
 
 }
-.back-btn {
+.back-btn, .pdf-btn {
   display: inline-block;
   background-color: var(--primary);
   color: #000;

@@ -386,7 +386,132 @@ function showDetails(item) {
   };
   details.appendChild(backBtn);
 
+  const pdfBtn = document.createElement('a');
+  pdfBtn.href = '#';
+  pdfBtn.className = 'back-btn';
+  pdfBtn.textContent = 'Esporta PDF';
+  pdfBtn.style.marginLeft = '10px';
+  pdfBtn.onclick = (e) => {
+	e.preventDefault();
+	generaPDF(item);
+  };
+details.appendChild(pdfBtn);
+
   app.appendChild(details);
+}
+
+// ======= PDF ======= 
+
+async function generaPDF(item) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // Margini e stili base
+  const left = 15;
+  let y = 20;
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(18);
+  doc.setTextColor(40, 40, 40);
+
+  // Titolo
+  const langData = item.translations?.[currentLang] || {};
+  const titolo = (langData.tipologia || item.tipologia || "").replace(/<br\s*\/?>/gi, " - ");
+  doc.text(titolo, left, y);
+  y += 10;
+
+  // Logo principale (se esiste)
+  try {
+    const img = await caricaImmagine(`img/${item.icon}`);
+    doc.addImage(img, "PNG", 160, 10, 30, 30);
+  } catch (err) {
+    console.warn("Logo principale non trovato:", err);
+  }
+
+  // Linea separatrice
+  doc.setDrawColor(252, 193, 51);
+  doc.setLineWidth(0.8);
+  doc.line(left, y, 195, y);
+  y += 8;
+
+  // Info principali
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(12);
+  const info = [
+   ["Modello", item.modello || ""],
+   ["Intensità", item.intensita || ""],
+   ["Viscosità", item.viscosita || ""],
+   ["Specifiche", item.specifiche || ""],
+  ];
+
+  info.forEach(([label, value]) => {
+  doc.setFont("helvetica", "bold");
+  doc.text(`${label}:`, left, y);
+  doc.setFont("helvetica", "normal");
+
+  // Gestione dei <br> con vero a capo
+  const cleanValue = (value || "").replace(/<br\s*\/?>/gi, "\n");
+  const lines = doc.splitTextToSize(cleanValue, 140); // avvolge testo lungo
+  doc.text(lines, left + 35, y);
+
+  // Calcola quanto spazio ha occupato il blocco
+  y += lines.length * 6 + 3;
+  
+  });
+
+  y += 4;
+  doc.line(left, y, 195, y);
+  y += 10;
+
+  // Descrizione
+  doc.setFont("helvetica", "bold");
+  doc.text("Descrizione:", left, y);
+  y += 7;
+  doc.setFont("helvetica", "normal");
+  const descr = (langData.descrizione || item.descrizione || "").replace(/<br\s*\/?>/gi, "\n");
+  const descrLines = doc.splitTextToSize(descr, 180);
+  doc.text(descrLines, left, y);
+  y += descrLines.length * 6 + 6;
+
+  // Riferimenti commerciali
+  doc.setFont("helvetica", "bold");
+  doc.text("Riferimenti commerciali:", left, y);
+  y += 8;
+  doc.setFont("helvetica", "normal");
+
+  for (const ref of item.riferimenti) {
+    try {
+      const img = await caricaImmagine(`img/loghi/${ref.brand.toLowerCase()}.svg`);
+      doc.addImage(img, "SVG", left, y - 4, 12, 12);
+    } catch {}
+    doc.text(ref.nome, left + 18, y + 3);
+    y += 10;
+  }
+
+  // Footer
+  doc.setFontSize(10);
+  doc.setTextColor(150);
+  doc.text("© Alpego | Generato automaticamente", left, 285);
+
+  // Salva PDF
+  doc.save(`${titolo.replace(/\s+/g, "_")}.pdf`);
+}
+
+// Funzione helper per convertire immagine in base64
+function caricaImmagine(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+      resolve(canvas.toDataURL("image/png"));
+    };
+    img.onerror = reject;
+    img.src = url;
+  });
 }
 
 // ======= AVVIO =======
