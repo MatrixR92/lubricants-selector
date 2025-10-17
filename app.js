@@ -220,6 +220,7 @@ const translations = {
     viscosity: "Grado viscosità",
     specs: "Specifiche",
     refs: "Riferimenti commerciali",
+	descr: "Descrizione",
   },
   en: {
     back: "Back to list",
@@ -228,6 +229,7 @@ const translations = {
     viscosity: "Viscosity grade",
     specs: "Specifications",
     refs: "Commercial references",
+	descr: "Description",
   },
   fr: {
     back: "Retour à la liste",
@@ -236,6 +238,7 @@ const translations = {
     viscosity: "Grade de viscosité",
     specs: "Spécifications",
     refs: "Références commerciales",
+	descr: "Description",
   },
   de: {
     back: "Zurück zur Liste",
@@ -244,6 +247,7 @@ const translations = {
     viscosity: "Viskositätsklasse",
     specs: "Spezifikationen",
     refs: "Gewerbliche Referenzen",
+	descr: "Beschreibung",
   },
   es: {
     back: "Volver a la lista",
@@ -252,6 +256,7 @@ const translations = {
     viscosity: "Índice de viscosidad",
     specs: "Especificaciones",
     refs: "Referencias comerciales",
+	descr: "Descripción",
   },
 };
 
@@ -419,13 +424,16 @@ async function generaPDF(item) {
   // Margini e stili base
   const left = 15;
   let y = 20;
+  const labelWidth = 50;     // larghezza riservata alle etichette
+  const valueX = left + labelWidth; // inizio colonna valori
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
-  doc.setTextColor(40, 40, 40);
 
   // Titolo
   const langData = item.translations?.[currentLang] || {};
   const titolo = (langData.tipologia || item.tipologia || "").replace(/<br\s*\/?>/gi, " - ");
+  doc.setTextColor(0, 75, 135);
+  doc.setFont("helvetica", "bold");
   doc.text(titolo, left, y);
   y += 15;
 
@@ -445,37 +453,40 @@ async function generaPDF(item) {
 
   // Info principali
   doc.setFont("helvetica", "normal");
+  doc.setTextColor(40, 40, 40)
   doc.setFontSize(12);
   const info = [
-   ["Modello", item.modello || ""],
-   ["Intensità", item.intensita || ""],
-   ["Viscosità", item.viscosita || ""],
-   ["Specifiche", item.specifiche || ""],
+   [translations[currentLang].model, item.modello || ""],
+   [translations[currentLang].intensity, item.intensita || ""],
+   [translations[currentLang].viscosity, item.viscosita || ""],
+   [translations[currentLang].specs, item.specifiche || ""],
   ];
 
   info.forEach(([label, value]) => {
-  doc.setFont("helvetica", "bold");
-  doc.text(`${label}:`, left, y);
-  doc.setFont("helvetica", "normal");
+    doc.setFont("helvetica", "bold");
+	doc.setTextColor(0, 75, 135);
+    doc.text(label + ":", left, y);
 
-  // Gestione dei <br> con vero a capo
-  const cleanValue = (value || "").replace(/<br\s*\/?>/gi, "\n");
-  const lines = doc.splitTextToSize(cleanValue, 140); // avvolge testo lungo
-  doc.text(lines, left + 35, y);
+    doc.setFont("helvetica", "normal");
+	doc.setTextColor(40, 40, 40)
+    const cleanValue = (value || "").replace(/<br\s*\/?>/gi, "\n");
+    const lines = doc.splitTextToSize(cleanValue, 140); // larghezza valore
 
-  // Calcola quanto spazio ha occupato il blocco
-  y += lines.length * 6 + 3;
-  
-  });
+    doc.text(lines, valueX, y);
+
+    y += lines.length * 6 + 3; // aumenta y in base a quante righe occupa il valore
+});
 
   doc.line(left, y, 195, y);
   y += 10;
 
   // Descrizione
   doc.setFont("helvetica", "bold");
-  doc.text("Descrizione:", left, y);
+  doc.setTextColor(0, 75, 135);
+  doc.text(translations[currentLang].descr || "Descrizione" + ":", left, y);
   y += 7;
   doc.setFont("helvetica", "normal");
+  doc.setTextColor(40, 40, 40)
   const descr = (langData.descrizione || item.descrizione || "").replace(/<br\s*\/?>/gi, "\n");
   const descrLines = doc.splitTextToSize(descr, 180);
   doc.text(descrLines, left, y);
@@ -483,9 +494,11 @@ async function generaPDF(item) {
 
   // Riferimenti commerciali
   doc.setFont("helvetica", "bold");
-  doc.text("Riferimenti commerciali:", left, y);
+  doc.setTextColor(0, 75, 135);
+  doc.text(translations[currentLang].refs || "Riferimenti commerciali" + ":", left, y);
   y += 8;
   doc.setFont("helvetica", "normal");
+  doc.setTextColor(40, 40, 40)
 
   for (const ref of item.riferimenti) {
   try {
