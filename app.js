@@ -422,7 +422,7 @@ async function generaPDF(item) {
   // Logo principale (se esiste)
   try {
     const img = await caricaImmagine(`img/${item.icon}`);
-    doc.addImage(img, "PNG", 160, 10, 30, 30);
+    doc.addImage(img, "PNG", 160, 6, 20, 20);
   } catch (err) {
     console.warn("Logo principale non trovato:", err);
   }
@@ -481,7 +481,7 @@ async function generaPDF(item) {
   for (const ref of item.riferimenti) {
     try {
       const img = await caricaImmagine(`img/loghi/${ref.brand.toLowerCase()}.svg`);
-      doc.addImage(img, "SVG", left, y - 4, 12, 12);
+      doc.addImage(img, "PNG", left, y - 4, 12, 12);
     } catch {}
     doc.text(ref.nome, left + 18, y + 3);
     y += 10;
