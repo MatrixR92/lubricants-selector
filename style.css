@@ -163,7 +163,7 @@ h2 {
 }
 
 .card:hover {
-  background-color: var(--primary-dark);
+  background-color: #e0a800;
   color: #222;
 }
 
@@ -238,6 +238,13 @@ h2 {
   font-weight: 600;
   text-decoration: none;
   margin-top: 40px;
+}
+
+.back-btn:hover{
+	background-color: #e0a800;
+}
+.pdf-btn:hover{
+	background-color: #e0a800;
 }
 
 /* Tabella riformattata in stile "blocco verticale" */
