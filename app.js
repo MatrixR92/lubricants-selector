@@ -354,7 +354,7 @@ function showDetails(item) {
   details.appendChild(h2);
 
   const descrizione = document.createElement('p');
-  descrizione.textContent = descr;
+  descrizione.innerHTML = descr;
   details.appendChild(descrizione);
 
   const table = document.createElement('table');
@@ -455,12 +455,13 @@ async function generaPDF(item) {
   doc.setFont("helvetica", "normal");
   doc.setTextColor(40, 40, 40)
   doc.setFontSize(12);
+    
   const info = [
-   [translations[currentLang].model, item.modello || ""],
-   [translations[currentLang].intensity, item.intensita || ""],
-   [translations[currentLang].viscosity, item.viscosita || ""],
-   [translations[currentLang].specs, item.specifiche || ""],
-  ];
+  [translations[currentLang].model, langData.modello || item.modello || ""],
+  [translations[currentLang].intensity, langData.intensita || item.intensita || ""],
+  [translations[currentLang].viscosity, langData.viscosita || item.viscosita || ""],
+  [translations[currentLang].specs, langData.specifiche || item.specifiche || ""],
+];
 
   info.forEach(([label, value]) => {
     doc.setFont("helvetica", "bold");
