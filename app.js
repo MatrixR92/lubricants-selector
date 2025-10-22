@@ -338,8 +338,16 @@ function showDetails(item) {
   const descr = langData.descrizione || item.descrizione;
   const modello = langData.modello || item.modello;
   const intensita = langData.intensita || item.intensita;
-  const titolomod = titolo.replace(/<br\s*\/?>/gi, ' - ');
-
+  const titolomod = titolo.replace (/-?<br\s*\/?>/gi, (match) => {
+	  if (match.startsWith('-')) {
+	  // Caso: "-<br>" → elimina completamente
+	  return '';
+    } else {
+      // Caso: "<br>" → sostituisci con trattino e spazio
+    return ' - ';
+	}
+  });
+  
   const details = document.createElement('div');
   details.className = 'details';
 
@@ -431,7 +439,15 @@ async function generaPDF(item) {
 
   // Titolo
   const langData = item.translations?.[currentLang] || {};
-  const titolo = (langData.tipologia || item.tipologia || "").replace(/<br\s*\/?>/gi, " - ");
+  const titolo = (langData.tipologia || item.tipologia || "").replace (/-?<br\s*\/?>/gi, (match) => {
+	  if (match.startsWith('-')) {
+	  // Caso: "-<br>" → elimina completamente
+	  return '';
+    } else {
+      // Caso: "<br>" → sostituisci con trattino e spazio
+    return ' - ';
+	}
+  });
   doc.setTextColor(0, 75, 135);
   doc.setFont("helvetica", "bold");
   doc.text(titolo, left, y);
