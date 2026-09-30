@@ -18,6 +18,33 @@ const data = [
 		{ brand: "Petronas", nome: "Gear MEP" }
 	],
     icon: "riduttori-standard.svg",
+    // Valori "—" = segnaposto, da sostituire con i litri reali per ogni gruppo di sigle.
+    oilConfig: {
+      modelli: [
+        { sigle: ["BA","BE","BV"], valori: { centrale: "1.6" } },
+		{ sigle: ["BG"], valori: { centrale: "2.8" } },
+		{ sigle: ["BF"], valori: { centrale: "1.6" } },
+		{ sigle: ["DJ-360/400"], valori: { centrale: "3", laterale: "1.6" } },
+		{ sigle: ["DJ-460/500"], valori: { centrale: "4.2", laterale: "1.6" } },
+		{ sigle: ["FB", "FV"], valori: { centrale: "6" } },
+		{ sigle: ["FG", "LG", "KG", "IG"], valori: { centrale: "9.2" } },
+		{ sigle: ["TB2-140/160"], valori: { centrale: "1.5" } },
+		{ sigle: ["TB2-180"], valori: { centrale: "1.8" } },
+		{ sigle: ["TB2-200/220"], valori: { centrale: "2" } },
+		{ sigle: ["TR27-140/160"], valori: { centrale: "1.5" } },
+		{ sigle: ["TR27-180"], valori: { centrale: "1.8" } },
+		{ sigle: ["TR27-200"], valori: { centrale: "2" } },
+		{ sigle: ["TR36-160/180"], valori: { centrale: "1.3" } },
+		{ sigle: ["TR36-200"], valori: { centrale: "1.4" } },
+		{ sigle: ["TR56"], valori: { centrale: "2.1" } },
+		{ sigle: ["TT97"], valori: { centrale: "5.5" } },
+		{ sigle: ["TL35E"], valori: { centrale: "1.3" } },
+		{ sigle: ["TL35I"], valori: { centrale: "1.3" } },
+		{ sigle: ["TL50-180/200/220"], valori: { centrale: "2.9" } },
+		{ sigle: ["TL50-240/260"], valori: { centrale: "3.3" } },
+		
+      ],
+    },
     translations: {
       en: {
         tipologia: "GEARBOXES<br>MULTIPLIERS",
@@ -40,7 +67,7 @@ const data = [
   },
   {
     tipologia: "RIDUTTORI<br>MOLTIPLICATORI<br>CAMBI",
-    modello: "RM - RMT - RK - RTEK - RMAX - DP - DK - DTEK - DMAX<br>FZ - LZ - KZ - POKER - TYSON",
+    modello: "RM - RMT - RK - RTEK - RMAX - DP - DK - DTEK - DMAX<br>FZ - LZ - KZ - IZ - POKER - TYSON",
     intensita: "Elevata",
     viscosita: "ISO VG 220",
     descrizione: "Olio EP a base sintetica (PAO) per ingranaggi industriali",
@@ -55,6 +82,22 @@ const data = [
 		{ brand: "Petronas", nome: "Gear Syn PAO 220" }
 	],
     icon: "riduttori-hp.svg",
+    // Valori "—" = segnaposto. Qui i gruppi hanno anche "laterale": comparirà
+    // lo schema a tre riquadri (centrale + due laterali uguali fra loro).
+    oilConfig: {
+      modelli: [
+        { sigle: ["RMT"], valori: { centrale: "2.8" } },
+		{ sigle: ["RTEK", "RMAX"], valori: { centrale: "4.7" } },
+		{ sigle: ["DP"], valori: { centrale: "6", laterale: "1.6" } },
+		{ sigle: ["DTEK"], valori: { centrale: "6", laterale: "4" } },
+		{ sigle: ["DTEK CS"], valori: { centrale: "8.5", laterale: "4" } },
+		{ sigle: ["DMAX"], valori: { centrale: "7.3", laterale: "4.7" } },
+		{ sigle: ["FZ","LZ","KZ", "IZ"], valori: { centrale: "12" } },
+		{ sigle: ["POKER"], valori: { centrale: "6", laterale: "6.8" } },
+		{ sigle: ["TYSON"], valori: { centrale: "7.3", laterale: "10" } },
+		{ sigle: ["TYSON C"], valori: { centrale: "14", laterale: "10" } },
+      ],
+    },
 	translations: {
       en: {
         tipologia: "GEARBOXES<br>MULTIPLIERS",
@@ -133,6 +176,12 @@ const data = [
 		{ brand: "Pakelo", nome: "Hydraulic Fluid HVI 46" },
 	],
     icon: "circuiti.svg",
+    // Un solo modello ("AGILE") => nessun menu a tendina, valore fisso.
+    oilConfig: {
+	   modelli: [
+        { sigle: ["AGILE"], valori: { centrale: "6" } },
+      ],
+    },
 	translations: {
       en: {
         tipologia: "HYDRAULIC CIRCUITS",
@@ -221,6 +270,8 @@ const translations = {
     specs: "Specifiche",
     refs: "Riferimenti commerciali",
 	descr: "Descrizione",
+    oilTitle: "Livello olio",
+    oilPick: "Seleziona il modello macchina",
   },
   en: {
     back: "Back to list",
@@ -230,6 +281,8 @@ const translations = {
     specs: "Specifications",
     refs: "Commercial references",
 	descr: "Description",
+    oilTitle: "Oil level",
+    oilPick: "Select the machine model",
   },
   fr: {
     back: "Retour à la liste",
@@ -239,6 +292,8 @@ const translations = {
     specs: "Spécifications",
     refs: "Références commerciales",
 	descr: "Description",
+    oilTitle: "Niveau d'huile",
+    oilPick: "Sélectionnez le modèle de machine",
   },
   de: {
     back: "Zurück zur Liste",
@@ -248,6 +303,8 @@ const translations = {
     specs: "Spezifikationen",
     refs: "Gewerbliche Referenzen",
 	descr: "Beschreibung",
+    oilTitle: "Ölstand",
+    oilPick: "Maschinenmodell auswählen",
   },
   es: {
     back: "Volver a la lista",
@@ -257,349 +314,462 @@ const translations = {
     specs: "Especificaciones",
     refs: "Referencias comerciales",
 	descr: "Descripción",
+    oilTitle: "Nivel de aceite",
+    oilPick: "Seleccione el modelo de máquina",
   },
 };
 
+// ======= LIVELLO OLIO (solo Riduttori/Moltiplicatori/Cambi e Circuiti idraulici) =======
+//
+// COME FUNZIONA (per chi deve solo inserire i dati, senza toccare il resto):
+// Ogni voce dell'array "data" può avere in più un campo "oilConfig". Se manca
+// del tutto, sulla pagina di quel prodotto non compare nessuno schema/olio:
+// è il comportamento di default per tutto ciò che non è riduttore o circuito.
+//
+// Due situazioni possibili:
+//
+// 1) La quantità cambia in base al modello macchina => usare "modelli":
+//      oilConfig: {
+//        modelli: [
+//          { sigle: ["BA","BE","BV"], valori: { centrale: 5.5 } },
+//          { sigle: ["RM","RMT"],     valori: { centrale: 5.5, laterale: 2.1 } },
+//        ]
+//      }
+//    Compare un menu a tendina con le sigle di ogni gruppo; scegliendone uno
+//    si aggiornano i litri mostrati.
+//
+// 2) La quantità è UNICA per tutte le macchine (es. Circuiti idraulici, dove il
+//    modello è solo "AGILE") => usare "valori" al posto di "modelli", così NON
+//    compare nessun menu a tendina, solo lo schema con il valore fisso:
+//      oilConfig: { valori: { centrale: 12 } }
+//
+// Regola dei riquadri: se "valori" contiene solo "centrale" viene disegnato UN
+// riduttore singolo, centrato. Se contiene anche "laterale" vengono disegnati
+// TRE riquadri (centrale + due laterali, sempre con lo stesso valore su
+// entrambi i lati, collegati al centrale tramite cardano).
+//
+// I nomi che si leggono sopra i riquadri ("Centrale" / "Laterale") sono
+// modificabili e tradotti: se un domani serve chiamarli diversamente SOLO per
+// una voce specifica (es. "Vasca" invece di "Centrale"), si aggiunge "label"
+// dentro quella stessa oilConfig, con le 5 lingue, così:
+//      oilConfig: {
+//        label: { centrale: { it:"Vasca", en:"Tank", fr:"Cuve", de:"Wanne", es:"Cuba" } },
+//        valori: { centrale: 9 }
+//      }
+//    Se "label" non viene indicato, si usano i nomi di default qui sotto.
+
+const oilLabelDefaults = {
+  centrale: { it: "Centrale", en: "Central", fr: "Central", de: "Zentral", es: "Central" },
+  laterale: { it: "Laterale", en: "Side", fr: "Latéral", de: "Seitlich", es: "Lateral" },
+};
+
+function oilBoxLabel(key, item) {
+  const override = (item.oilConfig && item.oilConfig.label && item.oilConfig.label[key]) || null;
+  const src = override || oilLabelDefaults[key] || {};
+  return src[currentLang] || src.it || key;
+}
+
+let oilUid = 0;
+
+// Disegna un'unica forma d'olio continua (nessuna cucitura/gap possibile),
+// con una superficie leggermente ondulata: la forma riempie tutto lo spazio
+// sotto la curva, quindi qualunque scorrimento orizzontale resta sempre
+// "coperto" di giallo, senza mai far intravedere lo sfondo della card.
+function oilWavePath(width, baseY, bottomY, amp, period) {
+  let x = -period, d = `M ${x},${baseY}`, up = true;
+  const endX = width + period;
+  while (x < endX) {
+    const cx = x + period / 2;
+    const cy = up ? baseY - amp : baseY + amp;
+    x += period;
+    d += ` Q ${cx},${cy} ${x},${baseY}`;
+    up = !up;
+  }
+  d += ` V ${bottomY} H ${-period} Z`;
+  return d;
+}
+
+// Riquadro riduttore stilizzato: contorno blu, riempimento olio basso e fisso
+// (il livello grafico è sempre lo stesso, volutamente non pieno: è solo la
+// scritta in litri che cambia in base al modello scelto).
+function gearboxSVG(w, h, litri, label, role) {
+  const id = "oil" + (oilUid++);
+  const bx = 4, by = 4, bw = w - 8, bh = h - 8, rx = Math.min(w, h) * 0.16;
+  const level = 0.42; // riempimento grafico fisso, volutamente basso
+  const oilTop = by + bh * (1 - level);
+  const wave = oilWavePath(bw, 0, h, 2.2, 24);
+  const fontSize = Math.max(15, Math.min(28, w * 0.22));
+  const textY = by + (oilTop - by) / 2 + fontSize * 0.35;
+  return `
+  <div class="gbx gbx-${role}">
+    <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet">
+      <clipPath id="clip-${id}"><rect x="${bx}" y="${by}" width="${bw}" height="${bh}" rx="${rx}"/></clipPath>
+      <g clip-path="url(#clip-${id})">
+        <g transform="translate(${bx},${oilTop})"><g class="bob"><g class="wave">
+          <path d="${wave}" fill="var(--y)"/>
+        </g></g></g>
+      </g>
+      <rect x="${bx}" y="${by}" width="${bw}" height="${bh}" rx="${rx}" fill="none" stroke="var(--blue)" stroke-width="2.4"/>
+      <text x="${w / 2}" y="${textY}" text-anchor="middle" class="oil-litri" style="font-size:${fontSize}px">${litri} L</text>
+    </svg>
+    <div class="tag">${label}</div>
+  </div>`;
+}
+
+// Linea di collegamento (cardano) tra riduttore centrale e laterale: una sola
+// linea semplice, leggermente inclinata, niente giunti/cerchi.
+function shaftConnector(mirror) {
+  const y1 = mirror ? 11 : 5, y2 = mirror ? 5 : 11;
+  return `<svg class="shaft" viewBox="0 0 34 16" preserveAspectRatio="none">
+    <line x1="1" y1="${y1}" x2="33" y2="${y2}" stroke="var(--blue)" stroke-width="2.4" stroke-linecap="round"/>
+  </svg>`;
+}
+
+function renderOilVisual(valori, item) {
+  const hasLaterale = valori.laterale !== undefined && valori.laterale !== null && valori.laterale !== "";
+  if (!hasLaterale) {
+    return `<div class="rig">${gearboxSVG(138, 116, valori.centrale, oilBoxLabel("centrale", item), "single")}</div>`;
+  }
+  return `<div class="rig triple">
+    ${gearboxSVG(66, 66, valori.laterale, oilBoxLabel("laterale", item), "lateral")}
+    ${shaftConnector(false)}
+    ${gearboxSVG(106, 96, valori.centrale, oilBoxLabel("centrale", item), "central")}
+    ${shaftConnector(true)}
+    ${gearboxSVG(66, 66, valori.laterale, oilBoxLabel("laterale", item), "lateral")}
+  </div>`;
+}
+
+function oilSectionHTML(item) {
+  const cfg = item.oilConfig;
+  if (!cfg) return "";
+  const t = T();
+  if (cfg.modelli && cfg.modelli.length) {
+    const opts = cfg.modelli.map((m, i) => `<option value="${i}">${m.sigle.join(" - ")}</option>`).join("");
+    return `<section class="card sec oil-card">
+      <h2>${t.oilTitle}</h2>
+      <select class="oil-select" id="oilSelect" aria-label="${t.oilPick}">${opts}</select>
+      <div id="oilVisual">${renderOilVisual(cfg.modelli[0].valori, item)}</div>
+    </section>`;
+  }
+  return `<section class="card sec oil-card">
+    <h2>${t.oilTitle}</h2>
+    <div id="oilVisual">${renderOilVisual(cfg.valori, item)}</div>
+  </section>`;
+}
+
+function wireOilSection(item) {
+  const sel = $("oilSelect");
+  if (!sel) return;
+  sel.onchange = () => {
+    const m = item.oilConfig.modelli[sel.value];
+    $("oilVisual").innerHTML = renderOilVisual(m.valori, item);
+  };
+}
+
+// ======= UI (stile Tramline) =======
+Object.entries({it:"Seleziona l'applicazione",en:"Select the application",fr:"Sélectionnez l'application",de:"Anwendung auswählen",es:"Seleccione la aplicación"}).forEach(([l,v])=>translations[l].pick=v);
+// Sottotitolo fisso in header, sul modello di "Configuratore di tracciatura" della Tramline
+Object.entries({it:"Selettore lubrificanti industriali",en:"Industrial lubricant selector",fr:"Sélecteur de lubrifiants industriels",de:"Industrieschmierstoff-Auswahl",es:"Selector de lubricantes industriales"}).forEach(([l,v])=>translations[l].subtitle=v);
+
 let currentLang = 'it';
 let currentItem = null;
-
 const app = document.getElementById('app');
+const $ = id => document.getElementById(id);
+const T = () => translations[currentLang];
+const L = (it,k) => (it.translations?.[currentLang]||{})[k] || it[k];
+const clean = s => s.replace(/-?<br\s*\/?>/gi, m => m.startsWith('-') ? '' : ' - ');
+const chips = s => s.split(/<br\s*\/?>/gi).flatMap(l => l.split(' - ')).map(v => v.trim()).filter(Boolean)
+  .map(v => `<span class="chip">${v}</span>`).join('');
+const SUN='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const MOON='<svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
 
 // ======= LINGUE =======
-function toggleLangMenu() {
-  const menu = document.getElementById('langMenu');
-  if (menu) menu.classList.toggle('show');
-}
-
-function setLang(lang) {
+function toggleLangMenu(){ $('langMenu').classList.toggle('show'); }
+function setLang(lang){
   currentLang = lang;
   localStorage.setItem('lang', lang);
+  document.documentElement.lang = lang;
+  $('currentLang').src = `img/${lang}.png`;
+  $('langMenu').classList.remove('show');
+  currentItem ? showDetails(currentItem) : showHome();
+}
+window.addEventListener('click', e => { if(!e.target.closest('.lw')) $('langMenu').classList.remove('show'); });
 
-  const current = document.getElementById('currentLang');
-  if (current) current.src = `img/${lang}.png`;
-
-  const menu = document.getElementById('langMenu');
-  if (menu) menu.classList.remove('show');
-
-  if (currentItem) showDetails(currentItem);
-  else showHome();
+function chrome(){
+  $('sub').textContent = T().subtitle;
+  $('bBackT').textContent = T().back;
 }
 
-// Chiude menu se clicchi fuori
-window.addEventListener('click', (e) => {
-  const menu = document.getElementById('langMenu');
-  const icon = document.querySelector('.lang-icon');
-  if (!menu || !icon) return;
-  if (!menu.contains(e.target) && !icon.contains(e.target)) {
-    menu.classList.remove('show');
-  }
+// ======= HOME =======
+function goHome(){ showHome(); }
+function showHome(){
+  window.scroll(0,0);
+  currentItem = null;
+  $('nav').hidden = true;
+  chrome();
+  app.innerHTML = `<section class="sec"><h2>${T().pick}</h2><div id="grid">${data.map((it,i)=>`
+    <button class="card ap" data-i="${i}"><span class="tile big"><img src="img/${it.icon}" alt=""></span>
+    <h3>${L(it,'tipologia')}</h3></button>`).join('')}</div></section>`;
+  app.querySelectorAll('.ap').forEach(b => b.onclick = () => showDetails(data[b.dataset.i]));
+}
+
+// ======= DETTAGLI (master-detail su desktop) =======
+function sideListHTML(activeItem){
+  return data.map((it,i) => `
+    <button class="side-i ${it===activeItem?'on':''}" data-i="${i}">
+      <span class="tile"><img src="img/${it.icon}" alt=""></span>
+      <span class="side-t">${L(it,'tipologia').replace(/<br\s*\/?>/gi,' ')}</span>
+    </button>`).join('');
+}
+
+function showDetails(item){
+  window.scroll(0,0);
+  currentItem = item;
+  $('nav').hidden = false;
+  chrome();
+  const t = T(), g = k => L(item,k);
+  app.innerHTML = `
+  <div class="detail-grid">
+    <aside class="side-list" id="sideList">${sideListHTML(item)}</aside>
+    <div class="detail-main">
+      <section class="card sum">
+        <div class="hero"><span class="tile big"><img src="img/${item.icon}" alt=""></span>
+          <h2 class="ht">${clean(g('tipologia'))}</h2></div>
+        <div><div class="lbl">${t.descr}</div><p class="desc">${g('descrizione')}</p></div>
+      </section>
+      <section class="kpis">
+        ${item.oilConfig ? '' : `<div class="k wide"><span>${t.model}</span><div class="chips">${chips(g('modello'))}</div></div>`}
+        <div class="k y"><span>${t.intensity}</span><div class="v">${g('intensita')}</div></div>
+        <div class="k y"><span>${t.viscosity}</span><div class="v">${g('viscosita')}</div></div>
+        <div class="k full"><span>${t.specs}</span><div class="chips">${chips(g('specifiche'))}</div></div>
+      </section>
+      ${oilSectionHTML(item)}
+      <section class="card sec"><h2>${t.refs}</h2><div class="refs">${item.riferimenti.map(r=>`
+        <div class="ref"><img src="img/loghi/${r.brand.toLowerCase()}.png" alt="${r.brand}"><span>${r.nome}</span></div>`).join('')}</div></section>
+    </div>
+  </div>`;
+  app.querySelectorAll('.side-i').forEach(b => b.onclick = () => showDetails(data[b.dataset.i]));
+  wireOilSection(item);
+}
+
+// ======= TEMA =======
+const root = document.documentElement, mq = matchMedia('(prefers-color-scheme: light)');
+const eff = () => root.dataset.theme || (mq.matches ? 'light' : 'dark');
+const paintTheme = () => { const d = eff()==='dark'; $('bTheme').innerHTML = d?SUN:MOON; $('bTheme').setAttribute('aria-label', d?'Light theme':'Dark theme'); };
+$('bTheme').onclick = () => { const n = eff()==='dark'?'light':'dark'; root.dataset.theme = n; try{localStorage.setItem('ls-theme',n)}catch(e){} paintTheme(); };
+mq.addEventListener('change', paintTheme);
+$('bBack').onclick = showHome;
+$('bHome').onclick = goHome;
+$('bPdf').onclick = () => currentItem && generaPDF(currentItem);
+
+// ======= AVVIO =======
+document.addEventListener('DOMContentLoaded', () => {
+  const savedLang = localStorage.getItem('lang');
+  if (savedLang && translations[savedLang]) currentLang = savedLang;
+  document.documentElement.lang = currentLang;
+  $('currentLang').src = `img/${currentLang}.png`;
+  try{const th = localStorage.getItem('ls-theme'); if(th) root.dataset.theme = th}catch(e){}
+  paintTheme();
+  showHome();
 });
 
-// ======= HEADER / HOME =======
-function goHome() {
-  showHome();
-}
-
-function showHome() {
-  window.scroll(0, 0);
-  
-  currentItem = null;
-  app.innerHTML = '';
-
-  const grid = document.createElement('div');
-  grid.id = 'grid';
-
-  data.forEach(item => {
-    const langData = item.translations?.[currentLang] || {};
-    const titolo = langData.tipologia || item.tipologia;
-
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <img src="img/${item.icon}" class="card-logo" alt="${titolo}">
-      <h2>${titolo}</h2>
-    `;
-    card.onclick = () => showDetails(item);
-    grid.appendChild(card);
+// ======= IMMAGINI PER IL PDF =======
+// Le versioni precedenti caricavano le immagini con <img crossOrigin="anonymous"> e le
+// ridisegnavano su un <canvas>: se il browser considera quella richiesta "cross-origin"
+// (capita spesso con GitHub Pages + Service Worker), il canvas diventa "tainted" e
+// canvas.toDataURL() lancia un errore silenzioso, catturato dal try/catch: risultato,
+// il logo semplicemente non compare nel PDF. Qui si aggira il problema:
+// - i PNG (loghi marchi, logo piccolo) vengono scaricati con fetch() e convertiti in
+//   base64 via FileReader, senza mai passare dal canvas.
+// - l'icona di categoria (SVG) viene invece incapsulata in una data:URI e SOLO quella
+//   viene disegnata su canvas: le data:URI non "sporcano" mai il canvas, quindi
+//   toDataURL() funziona sempre, indipendentemente da dove è ospitato il sito.
+// ======= IMMAGINI PER IL PDF =======
+// Se sei arrivato qui perché il PDF continua a non mostrare i loghi: apri la Console
+// del browser (F12) subito dopo aver generato il PDF. Ogni immagine che fallisce
+// stampa un avviso con l'URL esatto tentato e l'errore dei DUE metodi provati,
+// così si capisce subito se è un problema di percorso file o di hosting.
+//
+// Metodo 1 (fetch + FileReader): il più affidabile quando il sito è online
+// (GitHub Pages, un server http/https qualsiasi).
+// Metodo 2 (<img> + canvas): funziona anche aprendo index.html in locale con
+// doppio clic (protocollo file://), dove fetch() viene bloccato dal browser.
+// Si usa il primo che funziona, in automatico.
+function rasterize(src, size) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = size || img.naturalWidth || img.width || 1;
+        canvas.height = size || img.naturalHeight || img.height || 1;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve({ dataUrl: canvas.toDataURL('image/png'), w: canvas.width, h: canvas.height });
+      } catch (err) { reject(err); }
+    };
+    img.onerror = () => reject(new Error(`Immagine non caricabile: ${src}`));
+    img.src = src;
   });
-
-  app.appendChild(grid);
 }
 
-// ======= DETTAGLI =======
-function showDetails(item) {
-  window.scroll(0, 0);  
-  
-  currentItem = item;
-  app.innerHTML = '';
-
-  const langData = item.translations?.[currentLang] || {};
-  const titolo = langData.tipologia || item.tipologia;
-  const descr = langData.descrizione || item.descrizione;
-  const modello = langData.modello || item.modello;
-  const intensita = langData.intensita || item.intensita;
-  const titolomod = titolo.replace (/-?<br\s*\/?>/gi, (match) => {
-	  if (match.startsWith('-')) {
-	  // Caso: "-<br>" → elimina completamente
-	  return '';
-    } else {
-      // Caso: "<br>" → sostituisci con trattino e spazio
-    return ' - ';
-	}
-  });
-  
-  const details = document.createElement('div');
-  details.className = 'details';
-
-  const logo = document.createElement('img');
-  logo.src = `img/${item.icon}`;
-  logo.alt = titolo;
-  logo.className = 'details-logo';
-  details.appendChild(logo);
-
-  const h2 = document.createElement('h2');
-  h2.textContent = titolomod;
-  details.appendChild(h2);
-
-  const descrizione = document.createElement('p');
-  descrizione.innerHTML = descr;
-  details.appendChild(descrizione);
-
-  const table = document.createElement('table');
-  table.className = 'table-info';
-  table.innerHTML = `
-    <tr><th>${translations[currentLang].model}</th><td>${modello}</td></tr>
-    <tr><th>${translations[currentLang].intensity}</th><td>${intensita}</td></tr>
-    <tr><th>${translations[currentLang].viscosity}</th><td>${item.viscosita}</td></tr>
-    <tr><th>${translations[currentLang].specs}</th><td>${item.specifiche}</td></tr>
-    <tr>
-<tr>
-  <th>${translations[currentLang].refs}</th>
-  <td>
-    <div class="refs-list">
-      ${item.riferimenti.map(ref => `
-        <div class="ref-item">
-          <img src="img/loghi/${ref.brand.toLowerCase()}.png" alt="${ref.brand}">
-          <span>${ref.nome}</span>
-        </div>
-      `).join('')}
-    </div>
-  </td>
-</tr>
-  `;
-  details.appendChild(table);
-
-  const backBtn = document.createElement('a');
-  backBtn.href = '#';
-  backBtn.className = 'back-btn';
-  backBtn.textContent = translations[currentLang].back;
-  backBtn.onclick = (e) => {
-    e.preventDefault();
-    showHome();
-  };
-  details.appendChild(backBtn);
-
-  const pdfBtn = document.createElement('a');
-  pdfBtn.href = '#';
-  pdfBtn.className = 'back-btn';
-  pdfBtn.style.display = 'inline-flex';
-  pdfBtn.style.alignItems = 'center';
-  pdfBtn.style.gap = '5px'; // distanza tra icona e testo
-  pdfBtn.style.marginLeft = '10px';
-  pdfBtn.onclick = (e) => {
-	  e.preventDefault();
-	  generaPDF(item);
-  };
-    
-  // Testo
-  const text = document.createTextNode('PDF');
-  
-  // Inserisci icona e testo nel pulsante
-  pdfBtn.appendChild(text);
-  
-  // Aggiungi il pulsante alla pagina
-  details.appendChild(pdfBtn);
-
-  app.appendChild(details);
+async function loadImageAsDataURL(url) {
+  let fetchErr = null;
+  try {
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const blob = await res.blob();
+    const dataUrl = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = () => reject(new Error('FileReader fallito'));
+      reader.readAsDataURL(blob);
+    });
+    const { w, h } = await new Promise(resolve => {
+      const im = new Image();
+      im.onload = () => resolve({ w: im.naturalWidth || 1, h: im.naturalHeight || 1 });
+      im.onerror = () => resolve({ w: 1, h: 1 });
+      im.src = dataUrl;
+    });
+    return { dataUrl, w, h };
+  } catch (err) {
+    fetchErr = err;
+  }
+  try {
+    const { dataUrl, w, h } = await rasterize(url);
+    return { dataUrl, w, h };
+  } catch (imgErr) {
+    console.warn(`[PDF] Immagine non trovata: ${new URL(url, location.href).href}`, { fetch: fetchErr?.message, img: imgErr?.message });
+    throw imgErr;
+  }
 }
 
-// ======= PDF ======= 
+async function loadSvgAsPngDataURL(url, size = 300) {
+  try {
+    const svgText = await fetch(url, { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); });
+    const svgData = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgText)));
+    const { dataUrl } = await rasterize(svgData, size);
+    return dataUrl;
+  } catch (err) {
+    // fallback: carica l'SVG direttamente come immagine (utile anche in locale)
+    const { dataUrl } = await rasterize(url, size);
+    return dataUrl;
+  }
+}
 
+// ======= PDF =======
 async function generaPDF(item) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  // Margini e stili base
   const left = 15;
   let y = 20;
-  const labelWidth = 50;     // larghezza riservata alle etichette
-  const valueX = left + labelWidth; // inizio colonna valori
+  const labelWidth = 50;
+  const valueX = left + labelWidth;
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
 
-  // Titolo
   const langData = item.translations?.[currentLang] || {};
-  const titolo = (langData.tipologia || item.tipologia || "").replace (/-?<br\s*\/?>/gi, (match) => {
-	  if (match.startsWith('-')) {
-	  // Caso: "-<br>" → elimina completamente
-	  return '';
-    } else {
-      // Caso: "<br>" → sostituisci con trattino e spazio
+  const titolo = (langData.tipologia || item.tipologia || "").replace(/-?<br\s*\/?>/gi, (match) => {
+    if (match.startsWith('-')) return '';
     return ' - ';
-	}
   });
   doc.setTextColor(0, 75, 135);
   doc.setFont("helvetica", "bold");
   doc.text(titolo, left, y);
   y += 15;
 
-  // Logo principale (se esiste)
+  // Logo principale (SVG -> PNG via canvas, sempre affidabile perché passa da data:URI)
   try {
-    const img = await caricaImmagine(`img/${item.icon}`);
-    doc.addImage(img, "PNG", 170, 10, 25, 25);
+    const iconData = await loadSvgAsPngDataURL(`img/${item.icon}`);
+    doc.addImage(iconData, "PNG", 170, 10, 25, 25);
   } catch (err) {
     console.warn("Logo principale non trovato:", err);
   }
 
-  // Linea separatrice
   doc.setDrawColor(252, 193, 51);
   doc.setLineWidth(0.8);
   doc.line(left, y, 195, y);
   y += 8;
 
-  // Info principali
   doc.setFont("helvetica", "normal");
-  doc.setTextColor(40, 40, 40)
+  doc.setTextColor(40, 40, 40);
   doc.setFontSize(12);
-    
+
   const info = [
-  [translations[currentLang].model, langData.modello || item.modello || ""],
-  [translations[currentLang].intensity, langData.intensita || item.intensita || ""],
-  [translations[currentLang].viscosity, langData.viscosita || item.viscosita || ""],
-  [translations[currentLang].specs, langData.specifiche || item.specifiche || ""],
-];
+    [translations[currentLang].model, langData.modello || item.modello || ""],
+    [translations[currentLang].intensity, langData.intensita || item.intensita || ""],
+    [translations[currentLang].viscosity, langData.viscosita || item.viscosita || ""],
+    [translations[currentLang].specs, langData.specifiche || item.specifiche || ""],
+  ];
 
   info.forEach(([label, value]) => {
     doc.setFont("helvetica", "bold");
-	doc.setTextColor(0, 75, 135);
+    doc.setTextColor(0, 75, 135);
     doc.text(label + ":", left, y);
 
     doc.setFont("helvetica", "normal");
-	doc.setTextColor(40, 40, 40)
+    doc.setTextColor(40, 40, 40);
     const cleanValue = (value || "").replace(/<br\s*\/?>/gi, "\n");
-    const lines = doc.splitTextToSize(cleanValue, 140); // larghezza valore
+    const lines = doc.splitTextToSize(cleanValue, 140);
 
     doc.text(lines, valueX, y);
-
-    y += lines.length * 6 + 3; // aumenta y in base a quante righe occupa il valore
-});
+    y += lines.length * 6 + 3;
+  });
 
   doc.line(left, y, 195, y);
   y += 10;
 
-  // Descrizione
   doc.setFont("helvetica", "bold");
   doc.setTextColor(0, 75, 135);
-  doc.text(translations[currentLang].descr || "Descrizione" + ":", left, y);
+  doc.text((translations[currentLang].descr || "Descrizione") + ":", left, y);
   y += 7;
   doc.setFont("helvetica", "normal");
-  doc.setTextColor(40, 40, 40)
+  doc.setTextColor(40, 40, 40);
   const descr = (langData.descrizione || item.descrizione || "").replace(/<br\s*\/?>/gi, "\n");
   const descrLines = doc.splitTextToSize(descr, 180);
   doc.text(descrLines, left, y);
   y += descrLines.length * 6 + 6;
 
-  // Riferimenti commerciali
   doc.setFont("helvetica", "bold");
   doc.setTextColor(0, 75, 135);
-  doc.text(translations[currentLang].refs || "Riferimenti commerciali" + ":", left, y);
+  doc.text((translations[currentLang].refs || "Riferimenti commerciali") + ":", left, y);
   y += 8;
   doc.setFont("helvetica", "normal");
-  doc.setTextColor(40, 40, 40)
+  doc.setTextColor(40, 40, 40);
 
+  // Loghi marchi: fetch+FileReader, con fallback automatico a <img>+canvas se il primo fallisce
   for (const ref of item.riferimenti) {
-  try {
-    const imgData = await caricaImmagine(`img/loghi/${ref.brand.toLowerCase()}.png`);
-
-    // Crea un elemento Image temporaneo per leggere larghezza/altezza reali
-    const tempImg = new Image();
-    tempImg.src = imgData;
-    await new Promise(resolve => tempImg.onload = resolve);
-
-    const targetHeight = 8; // altezza desiderata
-    const targetWidth = (tempImg.width / tempImg.height) * targetHeight;
-
-    doc.addImage(imgData, "PNG", left, y - 4, targetWidth, targetHeight);
-  } catch(err) {
-    console.warn("Logo riferimento non trovato:", err);
+    try {
+      const { dataUrl: imgData, w, h } = await loadImageAsDataURL(`img/loghi/${ref.brand.toLowerCase()}.png`);
+      const targetHeight = 8;
+      const targetWidth = (w / h) * targetHeight;
+      doc.addImage(imgData, "PNG", left, y - 4, targetWidth, targetHeight);
+    } catch (err) {
+      console.warn("Logo riferimento non trovato:", ref.brand, err);
+    }
+    doc.text(ref.nome, left + 25, y + 3);
+    y += 14;
   }
-  doc.text(ref.nome, left + 25, y + 3);
-  y += 14; // spazio verticale tra riferimenti
-}
 
-  // Footer
-doc.setFontSize(10);
-doc.setTextColor(150);
+  doc.setFontSize(10);
+  doc.setTextColor(150);
 
-const footerText = "© Alpego | Generato automaticamente";
-const pageWidth = doc.internal.pageSize.getWidth();
-const pageHeight = doc.internal.pageSize.getHeight();
-const margin = 15;
+  const footerText = "© Alpego | Generato automaticamente";
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 15;
 
-// Testo a sinistra
-doc.text(footerText, margin, pageHeight - 10);
+  doc.text(footerText, margin, pageHeight - 10);
 
-// Logo a destra
-try {
-  const footerLogo = await caricaImmagine("img/logo-piccolo.png");
-  const tempImg = new Image();
-  tempImg.src = footerLogo;
-  await new Promise(resolve => tempImg.onload = resolve);
+  try {
+    const { dataUrl: footerLogo, w, h } = await loadImageAsDataURL("img/logo-piccolo.png");
+    const targetHeight = 12;
+    const targetWidth = (w / h) * targetHeight;
+    doc.addImage(footerLogo, "PNG", pageWidth - margin - targetWidth, pageHeight - 10 - targetHeight / 2, targetWidth, targetHeight);
+  } catch (err) {
+    console.warn("Logo footer non trovato:", err);
+  }
 
-  const targetHeight = 12;
-  const targetWidth = (tempImg.width / tempImg.height) * targetHeight;
-
-  doc.addImage(
-    footerLogo,
-    "PNG",
-    pageWidth - margin - targetWidth,
-    pageHeight - 10 - targetHeight / 2, // centra verticalmente rispetto al testo
-    targetWidth,
-    targetHeight
-  );
-} catch(err) {
-  console.warn("Logo footer non trovato:", err);
-}
-
-  // Salva PDF
   doc.save(`${titolo.replace(/\s+/g, "_")}.pdf`);
 }
-
-// Funzione helper per convertire immagine in base64
-function caricaImmagine(url) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0);
-      resolve(canvas.toDataURL("image/png"));
-    };
-    img.onerror = reject;
-    img.src = url;
-  });
-}
-
-// ======= AVVIO =======
-document.addEventListener('DOMContentLoaded', () => {
-  const savedLang = localStorage.getItem('lang');
-  if (savedLang && translations[savedLang]) currentLang = savedLang;
-
-  const current = document.getElementById('currentLang');
-  if (current) current.src = `img/${currentLang}.png`;
-
-  showHome();
-});
