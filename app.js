@@ -489,7 +489,7 @@ function setLang(lang){
   currentLang = lang;
   localStorage.setItem('lang', lang);
   document.documentElement.lang = lang;
-  $('currentLang').src = `img/${lang}.png`;
+  $('currentLang').src = `img/${lang}.svg`;
   $('langMenu').classList.remove('show');
   currentItem ? showDetails(currentItem) : showHome();
 }
@@ -567,7 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedLang = localStorage.getItem('lang');
   if (savedLang && translations[savedLang]) currentLang = savedLang;
   document.documentElement.lang = currentLang;
-  $('currentLang').src = `img/${currentLang}.png`;
+  $('currentLang').src = `img/${currentLang}.svg`;
   try{const th = localStorage.getItem('ls-theme'); if(th) root.dataset.theme = th}catch(e){}
   paintTheme();
   showHome();
