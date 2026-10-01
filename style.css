@@ -147,7 +147,7 @@ h1,h2,h3{font-family:var(--fh);margin:0;letter-spacing:.01em}
 (-webkit-backdrop-filter: blur(1px)) or
 (backdrop-filter: blur(1px))
 ) {
-.top,
+
 .nav {
 background-color: var(--gl, var(--card));
 -webkit-backdrop-filter: saturate(1.6) blur(14px);
