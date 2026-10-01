@@ -773,3 +773,8 @@ async function generaPDF(item) {
 
   doc.save(`${titolo.replace(/\s+/g, "_")}.pdf`);
 }
+const topEl = document.querySelector('.top');
+const setTopH = () => document.documentElement.style.setProperty('--topH', topEl.offsetHeight + 'px');
+setTopH();
+new ResizeObserver(setTopH).observe(topEl);
+addEventListener('resize', setTopH);
