@@ -143,4 +143,4 @@ h1,h2,h3{font-family:var(--fh);margin:0;letter-spacing:.01em}
   .rig{margin-top:10px;gap:6px}
   .gbx-single{width:120px}
 }
-/*@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){.top,.nav{background:var(--gl);-webkit-backdrop-filter:saturate(1.6) blur(14px);backdrop-filter:saturate(1.6) blur(14px)}}*/
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){.top,.nav{background:var(--gl);-webkit-backdrop-filter:saturate(1.6) blur(14px);backdrop-filter:saturate(1.6) blur(14px)}}
