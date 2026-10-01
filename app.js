@@ -557,16 +557,16 @@ const root = document.documentElement, mq = matchMedia('(prefers-color-scheme: l
 const eff = () => root.dataset.theme || (mq.matches ? 'light' : 'dark');
 const paintTheme = () => {
 const dark = eff() === "dark";
- 
+ 
 $("bTheme").innerHTML = dark ? SUN : MOON;
- 
+ 
 $("bTheme").setAttribute(
 "aria-label",
 dark ? "Light theme" : "Dark theme"
 );
- 
+ 
 const themeColor = document.getElementById("themeColor");
- 
+ 
 if (themeColor) {
 themeColor.content = dark ? "#161d2a" : "#ffffff";
 }
@@ -673,121 +673,428 @@ async function loadSvgAsPngDataURL(url, size = 300) {
 }
 
 // ======= PDF =======
+// Recupera il modello e i valori olio attualmente selezionati nella pagina.
+function getSelectedOilData(item) {
+  const cfg = item.oilConfig;
+
+  if (!cfg) return null;
+
+  if (cfg.modelli && cfg.modelli.length) {
+    const select = document.getElementById('oilSelect');
+    let index = 0;
+
+    if (select) {
+      const parsedIndex = Number.parseInt(select.value, 10);
+      if (
+        Number.isInteger(parsedIndex) &&
+        parsedIndex >= 0 &&
+        parsedIndex < cfg.modelli.length
+      ) {
+        index = parsedIndex;
+      }
+    }
+
+    const selected = cfg.modelli[index];
+    return {
+      modello: selected.sigle.join(' - '),
+      valori: selected.valori,
+    };
+  }
+
+  if (cfg.valori) {
+    return {
+      modello: null,
+      valori: cfg.valori,
+    };
+  }
+
+  return null;
+}
+
+// Aggiunge una nuova pagina se lo spazio disponibile non basta.
+function ensurePdfSpace(doc, y, requiredHeight) {
+  // Il layout PDF e progettato per rimanere sempre in una sola pagina A4.
+  // La funzione resta per compatibilita con il resto del codice, ma non aggiunge pagine.
+  return y;
+}
+
+// Disegna un singolo riduttore/serbatoio stilizzato nel PDF.
+function drawPdfGearbox(doc, x, y, width, height, liters, label) {
+  const oilHeight = height * 0.42;
+  const oilY = y + height - oilHeight;
+
+  // Sfondo bianco del riquadro.
+  doc.setFillColor(255, 255, 255);
+  doc.roundedRect(x, y, width, height, 3, 3, 'F');
+
+  // Olio giallo nella parte inferiore.
+  doc.setFillColor(252, 193, 51);
+  doc.rect(x + 0.7, oilY, width - 1.4, oilHeight - 0.7, 'F');
+
+  // Contorno blu.
+  doc.setDrawColor(0, 149, 216);
+  doc.setLineWidth(0.7);
+  doc.roundedRect(x, y, width, height, 3, 3, 'S');
+
+  // Quantita in litri.
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10);
+  doc.setTextColor(15, 23, 42);
+  doc.text(
+    String(liters) + ' L',
+    x + width / 2,
+    y + height * 0.34,
+    { align: 'center' }
+  );
+
+  // Etichetta Centrale/Laterale.
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(7);
+  doc.setTextColor(90, 102, 120);
+  doc.text(
+    label,
+    x + width / 2,
+    y + height + 5,
+    { align: 'center' }
+  );
+}
+
+function drawPdfShaft(doc, x1, y1, x2, y2) {
+  doc.setDrawColor(0, 149, 216);
+  doc.setLineWidth(0.8);
+  doc.line(x1, y1, x2, y2);
+}
+
+// Disegna lo schema olio, singolo oppure con centrale e due laterali.
+function drawPdfOilDiagram(doc, item, selectedOil, startY) {
+  if (!selectedOil || !selectedOil.valori) return startY;
+
+  const valori = selectedOil.valori;
+  const hasLaterale =
+    valori.laterale !== undefined &&
+    valori.laterale !== null &&
+    valori.laterale !== '';
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(12);
+  doc.setTextColor(0, 75, 135);
+  doc.text(
+    (translations[currentLang].oilTitle || 'Livello olio') + ':',
+    15,
+    startY
+  );
+
+  const diagramY = startY + 8;
+
+  if (!hasLaterale) {
+    const boxWidth = 36;
+    const boxHeight = 28;
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const boxX = (pageWidth - boxWidth) / 2;
+
+    drawPdfGearbox(
+      doc,
+      boxX,
+      diagramY,
+      boxWidth,
+      boxHeight,
+      valori.centrale,
+      oilBoxLabel('centrale', item)
+    );
+
+    return diagramY + boxHeight + 12;
+  }
+
+  const lateralWidth = 24;
+  const lateralHeight = 22;
+  const centralWidth = 34;
+  const centralHeight = 28;
+  const leftX = 39;
+  const centralX = 88;
+  const rightX = 149;
+  const lateralY = diagramY + 5;
+  const centralY = diagramY;
+
+  drawPdfGearbox(
+    doc,
+    leftX,
+    lateralY,
+    lateralWidth,
+    lateralHeight,
+    valori.laterale,
+    oilBoxLabel('laterale', item)
+  );
+
+  drawPdfGearbox(
+    doc,
+    centralX,
+    centralY,
+    centralWidth,
+    centralHeight,
+    valori.centrale,
+    oilBoxLabel('centrale', item)
+  );
+
+  drawPdfGearbox(
+    doc,
+    rightX,
+    lateralY,
+    lateralWidth,
+    lateralHeight,
+    valori.laterale,
+    oilBoxLabel('laterale', item)
+  );
+
+  drawPdfShaft(
+    doc,
+    leftX + lateralWidth,
+    lateralY + lateralHeight / 2,
+    centralX,
+    centralY + centralHeight / 2
+  );
+
+  drawPdfShaft(
+    doc,
+    centralX + centralWidth,
+    centralY + centralHeight / 2,
+    rightX,
+    lateralY + lateralHeight / 2
+  );
+
+  return centralY + centralHeight + 12;
+}
+
+function addPdfFooterText(doc, pageNumber, totalPages) {
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(150);
+  doc.text('© Alpego | Generato automaticamente', 15, pageHeight - 10);
+  doc.text(
+    `${pageNumber} / ${totalPages}`,
+    pageWidth / 2,
+    pageHeight - 10,
+    { align: 'center' }
+  );
+}
+
 async function generaPDF(item) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
   const left = 15;
-  let y = 20;
   const labelWidth = 50;
   const valueX = left + labelWidth;
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(18);
+  let y = 20;
 
   const langData = item.translations?.[currentLang] || {};
-  const titolo = (langData.tipologia || item.tipologia || "").replace(/-?<br\s*\/?>/gi, (match) => {
-    if (match.startsWith('-')) return '';
-    return ' - ';
-  });
-  doc.setTextColor(0, 75, 135);
-  doc.setFont("helvetica", "bold");
-  doc.text(titolo, left, y);
-  y += 15;
+  const selectedOil = getSelectedOilData(item);
 
-  // Logo principale (SVG -> PNG via canvas, sempre affidabile perché passa da data:URI)
+  const titolo = (
+    langData.tipologia ||
+    item.tipologia ||
+    ''
+  ).replace(
+    /-?<br\s*\/?>/gi,
+    match => match.startsWith('-') ? '' : ' - '
+  );
+
+  // Se esiste il menu olio, usa il modello selezionato.
+  // Altrimenti usa il normale campo modello dell'elemento.
+  const selectedModel =
+    selectedOil?.modello ||
+    langData.modello ||
+    item.modello ||
+    '';
+
+  // Titolo.
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(16);
+  doc.setTextColor(0, 75, 135);
+  doc.text(titolo, left, y);
+
+  // Icona principale.
   try {
     const iconData = await loadSvgAsPngDataURL(`img/${item.icon}`);
-    doc.addImage(iconData, "PNG", 170, 10, 25, 25);
+    doc.addImage(iconData, 'PNG', 174, 10, 20, 20);
   } catch (err) {
-    console.warn("Logo principale non trovato:", err);
+    console.warn('Logo principale non trovato:', err);
   }
 
+  y += 12;
   doc.setDrawColor(252, 193, 51);
   doc.setLineWidth(0.8);
   doc.line(left, y, 195, y);
-  y += 8;
+  y += 6;
 
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(40, 40, 40);
-  doc.setFontSize(12);
-
+  // Dati principali.
+  doc.setFontSize(10);
   const info = [
-    [translations[currentLang].model, langData.modello || item.modello || ""],
-    [translations[currentLang].intensity, langData.intensita || item.intensita || ""],
-    [translations[currentLang].viscosity, langData.viscosita || item.viscosita || ""],
-    [translations[currentLang].specs, langData.specifiche || item.specifiche || ""],
+    [translations[currentLang].model, selectedModel],
+    [
+      translations[currentLang].intensity,
+      langData.intensita || item.intensita || '',
+    ],
+    [
+      translations[currentLang].viscosity,
+      langData.viscosita || item.viscosita || '',
+    ],
+    [
+      translations[currentLang].specs,
+      langData.specifiche || item.specifiche || '',
+    ],
   ];
 
-  info.forEach(([label, value]) => {
-    doc.setFont("helvetica", "bold");
+  for (const [label, value] of info) {
+    y = ensurePdfSpace(doc, y, 18);
+
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor(0, 75, 135);
-    doc.text(label + ":", left, y);
+    doc.text(label + ':', left, y);
 
-    doc.setFont("helvetica", "normal");
+    doc.setFont('helvetica', 'normal');
     doc.setTextColor(40, 40, 40);
-    const cleanValue = (value || "").replace(/<br\s*\/?>/gi, "\n");
+
+    const cleanValue = String(value || '').replace(/<br\s*\/?>/gi, '\n');
     const lines = doc.splitTextToSize(cleanValue, 140);
-
     doc.text(lines, valueX, y);
-    y += lines.length * 6 + 3;
-  });
+    y += lines.length * 4.8 + 2;
+  }
 
+  doc.setDrawColor(220, 220, 220);
   doc.line(left, y, 195, y);
-  y += 10;
-
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(0, 75, 135);
-  doc.text((translations[currentLang].descr || "Descrizione") + ":", left, y);
   y += 7;
-  doc.setFont("helvetica", "normal");
+
+  // Descrizione.
+  y = ensurePdfSpace(doc, y, 30);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10);
+  doc.setTextColor(0, 75, 135);
+  doc.text(
+    (translations[currentLang].descr || 'Descrizione') + ':',
+    left,
+    y
+  );
+
+  y += 5;
+  doc.setFont('helvetica', 'normal');
   doc.setTextColor(40, 40, 40);
-  const descr = (langData.descrizione || item.descrizione || "").replace(/<br\s*\/?>/gi, "\n");
+
+  const descr = (
+    langData.descrizione ||
+    item.descrizione ||
+    ''
+  ).replace(/<br\s*\/?>/gi, '\n');
+
+  doc.setFontSize(9.5);
   const descrLines = doc.splitTextToSize(descr, 180);
   doc.text(descrLines, left, y);
-  y += descrLines.length * 6 + 6;
+  y += descrLines.length * 4.8 + 5;
 
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(0, 75, 135);
-  doc.text((translations[currentLang].refs || "Riferimenti commerciali") + ":", left, y);
-  y += 8;
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(40, 40, 40);
+  // Schema olio e quantita.
+  if (selectedOil) {
+    const diagramHeight =
+      selectedOil.valori?.laterale !== undefined ? 47 : 43;
 
-  // Loghi marchi: fetch+FileReader, con fallback automatico a <img>+canvas se il primo fallisce
-  for (const ref of item.riferimenti) {
-    try {
-      const { dataUrl: imgData, w, h } = await loadImageAsDataURL(`img/loghi/${ref.brand.toLowerCase()}.png`);
-      const targetHeight = 8;
-      const targetWidth = (w / h) * targetHeight;
-      doc.addImage(imgData, "PNG", left, y - 4, targetWidth, targetHeight);
-    } catch (err) {
-      console.warn("Logo riferimento non trovato:", ref.brand, err);
-    }
-    doc.text(ref.nome, left + 25, y + 3);
-    y += 14;
+    y = ensurePdfSpace(doc, y, diagramHeight);
+    y = drawPdfOilDiagram(doc, item, selectedOil, y);
+
+    doc.setDrawColor(220, 220, 220);
+    doc.line(left, y, 195, y);
+    y += 6;
   }
 
+  // Riferimenti commerciali, disposti su due colonne per mantenere una sola pagina.
+  y = ensurePdfSpace(doc, y, 25);
+  doc.setFont('helvetica', 'bold');
   doc.setFontSize(10);
-  doc.setTextColor(150);
+  doc.setTextColor(0, 75, 135);
+  doc.text(
+    (translations[currentLang].refs || 'Riferimenti commerciali') + ':',
+    left,
+    y
+  );
+  y += 6;
 
-  const footerText = "© Alpego | Generato automaticamente";
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
-  const margin = 15;
+  const refsPerColumn = Math.ceil(item.riferimenti.length / 2);
+  const columnX = [left, 108];
+  const rowHeight = 11;
+  const refsStartY = y;
 
-  doc.text(footerText, margin, pageHeight - 10);
+  for (let i = 0; i < item.riferimenti.length; i++) {
+    const ref = item.riferimenti[i];
+    const column = Math.floor(i / refsPerColumn);
+    const row = i % refsPerColumn;
+    const x = columnX[column];
+    const rowY = refsStartY + row * rowHeight;
 
-  try {
-    const { dataUrl: footerLogo, w, h } = await loadImageAsDataURL("img/logo-piccolo.png");
-    const targetHeight = 12;
-    const targetWidth = (w / h) * targetHeight;
-    doc.addImage(footerLogo, "PNG", pageWidth - margin - targetWidth, pageHeight - 10 - targetHeight / 2, targetWidth, targetHeight);
-  } catch (err) {
-    console.warn("Logo footer non trovato:", err);
+    try {
+      const { dataUrl: imgData, w, h } = await loadImageAsDataURL(
+        `img/loghi/${ref.brand.toLowerCase()}.png`
+      );
+      const targetHeight = 6;
+      const targetWidth = Math.min((w / h) * targetHeight, 19);
+      doc.addImage(imgData, 'PNG', x, rowY - 3.5, targetWidth, targetHeight);
+    } catch (err) {
+      console.warn('Logo riferimento non trovato:', ref.brand, err);
+    }
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8.5);
+    doc.setTextColor(40, 40, 40);
+    const refLines = doc.splitTextToSize(ref.nome, 67);
+    doc.text(refLines, x + 22, rowY + 1.5);
   }
 
-  doc.save(`${titolo.replace(/\s+/g, "_")}.pdf`);
+  y = refsStartY + refsPerColumn * rowHeight;
+
+  // Logo del footer, caricato una volta sola.
+  let footerLogo = null;
+  try {
+    footerLogo = await loadImageAsDataURL('img/logo-piccolo.png');
+  } catch (err) {
+    console.warn('Logo footer non trovato:', err);
+  }
+
+  // Footer e numerazione su tutte le pagine.
+  const totalPages = doc.getNumberOfPages();
+  for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
+    doc.setPage(pageNumber);
+    addPdfFooterText(doc, pageNumber, totalPages);
+
+    if (footerLogo) {
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const targetHeight = 12;
+      const targetWidth = (footerLogo.w / footerLogo.h) * targetHeight;
+
+      doc.addImage(
+        footerLogo.dataUrl,
+        'PNG',
+        pageWidth - 15 - targetWidth,
+        pageHeight - 16,
+        targetWidth,
+        targetHeight
+      );
+    }
+  }
+
+  // Nome file: categoria + modello selezionato, se disponibile.
+  const safeTitle = titolo
+    .replace(/[\\/:*?"<>|]/g, '')
+    .replace(/\s+/g, '_');
+
+  const safeModel = selectedOil?.modello
+    ? '_' + selectedOil.modello
+        .replace(/[\\/:*?"<>|]/g, '')
+        .replace(/\s+/g, '_')
+    : '';
+
+  doc.save(`${safeTitle}${safeModel}.pdf`);
 }
+
 const topEl = document.querySelector('.top');
 const setTopH = () => document.documentElement.style.setProperty('--topH', topEl.offsetHeight + 'px');
 setTopH();
