@@ -6,7 +6,7 @@ box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
 
 html{scroll-padding-top:var(--topH)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.45 var(--fb);padding-bottom:96px;padding-top: var(--topH);}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.45 var(--fb);padding-bottom:96px;}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 :focus-visible{outline:3px solid var(--y);outline-offset:2px}
 html,body{overflow-x:hidden;max-width:100%}
@@ -14,7 +14,7 @@ h1,h2,h3{font-family:var(--fh);margin:0;letter-spacing:.01em}
 .sp{flex:1}
 
 /* header — stessa altezza, gap e logo della Tramline */
-.top{display:flex;align-items:center;gap:12px;position:fixed;top:0;left:0;right:0;z-index:20;padding:calc(12px + env(safe-area-inset-top,0px)) 12px 10px 12px;overflow: hidden;border-bottom:3px solid var(--y);background:var(--card)}
+.top{display:flex;align-items:center;gap:12px;position:fixed;top:0;left:0;right:0;z-index:20;padding:calc(12px + env(safe-area-inset-top,0px)) 12px 10px 12px;border-bottom:3px solid var(--y);background-color:var(--card)}
 .lg{height:36px;width:auto;flex:none}
 .lg-l{display:var(--dl)}
 .lg-d{display:var(--dd)}
@@ -35,7 +35,7 @@ h1,h2,h3{font-family:var(--fh);margin:0;letter-spacing:.01em}
 .lang-menu img{width:24px;height:auto;border-radius:3px}
 
 /* layout */
-.app{max-width:1280px;margin:0 auto;padding:12px;display:grid;gap:14px;width:100%}
+.app{max-width:1280px;margin: var(--topH) auto 0;padding:12px;display:grid;gap:14px;width:100%}
 #app{display:grid;gap:14px;min-width:0}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;min-width:0}
 .sec{display:grid;gap:12px}
