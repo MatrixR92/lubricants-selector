@@ -1,8 +1,8 @@
-:root{--topH:calc(67px + env(safe-area-inset-top,0px));color-scheme:dark;--dd:block;--dl:none;--bg:#0b0f17;--card:#161d2a;--card2:#1d2636;--ink:#f8fafc;--mut:#94a3b8;--line:rgba(255,255,255,.1);--y:#FCC133;--yt:#FCC133;--yink:#1a1400;--ok:#22c55e;--ytint:rgba(252,193,51,.1);--yb:rgba(252,193,51,.55);--gl:rgba(255, 255, 255, .82);--fh:'Barlow Condensed','Arial Narrow',sans-serif;--fb:'Barlow',system-ui,sans-serif;
+:root{--topH:calc(67px + env(safe-area-inset-top,0px));color-scheme:dark;--dd:block;--dl:none;--bg:#0b0f17;--card:#161d2a;--card2:#1d2636;--ink:#f8fafc;--mut:#94a3b8;--line:rgba(255,255,255,.1);--y:#FCC133;--yt:#FCC133;--yink:#1a1400;--ok:#22c55e;--ytint:rgba(252,193,51,.1);--yb:rgba(252,193,51,.55);--fh:'Barlow Condensed','Arial Narrow',sans-serif;--fb:'Barlow',system-ui,sans-serif;
 box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:light){:root:not([data-theme="dark"]){color-scheme:light;--dd:none;--dl:block;--bg:#f1f3f7;--card:#fff;--card2:#eef1f6;--ink:#0f172a;--mut:#5b6678;--line:rgba(15,23,42,.12);--yt:#8a5f00;--ytint:rgba(252,193,51,.42);--yb:#D9A000}}
-:root[data-theme="dark"]{color-scheme:dark;--dd:block;--dl:none;--bg:#0b0f17;--card:#161d2a;--card2:#1d2636;--ink:#f8fafc;--mut:#94a3b8;--line:rgba(255,255,255,.1);--yt:#FCC133;--ytint:rgba(252,193,51,.1);--yb:rgba(252,193,51,.55)}
-:root[data-theme="light"]{color-scheme:light;--dd:none;--dl:block;--bg:#f1f3f7;--card:#fff;--card2:#eef1f6;--ink:#0f172a;--mut:#5b6678;--line:rgba(15,23,42,.12);--yt:#8a5f00;--ytint:rgba(252,193,51,.42);--yb:#D9A000}
+:root[data-theme="dark"]{color-scheme:dark;--dd:block;--dl:none;--bg:#0b0f17;--card:#161d2a;--card2:#1d2636;--gl:rgba(22,29,42,.82);--ink:#f8fafc;--mut:#94a3b8;--line:rgba(255,255,255,.1);--yt:#FCC133;--ytint:rgba(252,193,51,.1);--yb:rgba(252,193,51,.55)}
+:root[data-theme="light"]{color-scheme:light;--dd:none;--dl:block;--bg:#f1f3f7;--card:#fff;--card2:#eef1f6;--gl:rgba(255,255,255,.82);--ink:#0f172a;--mut:#5b6678;--line:rgba(15,23,42,.12);--yt:#8a5f00;--ytint:rgba(252,193,51,.42);--yb:#D9A000}
 
 html{scroll-padding-top:var(--topH)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
