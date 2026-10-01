@@ -555,7 +555,22 @@ function showDetails(item){
 // ======= TEMA =======
 const root = document.documentElement, mq = matchMedia('(prefers-color-scheme: light)');
 const eff = () => root.dataset.theme || (mq.matches ? 'light' : 'dark');
-const paintTheme = () => { const d = eff()==='dark'; $('bTheme').innerHTML = d?SUN:MOON; $('bTheme').setAttribute('aria-label', d?'Light theme':'Dark theme'); };
+const paintTheme = () => {
+const dark = eff() === "dark";
+ 
+$("bTheme").innerHTML = dark ? SUN : MOON;
+ 
+$("bTheme").setAttribute(
+"aria-label",
+dark ? "Light theme" : "Dark theme"
+);
+ 
+const themeColor = document.getElementById("themeColor");
+ 
+if (themeColor) {
+themeColor.content = dark ? "#161d2a" : "#ffffff";
+}
+};
 $('bTheme').onclick = () => { const n = eff()==='dark'?'light':'dark'; root.dataset.theme = n; try{localStorage.setItem('ls-theme',n)}catch(e){} paintTheme(); };
 mq.addEventListener('change', paintTheme);
 $('bBack').onclick = showHome;
